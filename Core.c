@@ -16,52 +16,21 @@ Core *initCore(Instruction_Memory *i_mem)
     //uint64_t arr[] = {16, 128, 8, 4};
 
 
-    core->data_mem[0] = 16;
-    core->data_mem[1] = 0;
-    core->data_mem[2] = 0;
-    core->data_mem[3] = 0;
-    core->data_mem[4] = 0;
-    core->data_mem[5] = 0;
-    core->data_mem[6] = 0;
-    core->data_mem[7] = 0;
+    for (int i = 0; i <(16);i++)
+	{
+		core->data_mem[i*8] = i;
+		printf("data_mem[%d] = %d\n", i, i);
+	}
+	
 
-
-    core->data_mem[8] = 128;
-    core->data_mem[9] = 0;
-    core->data_mem[10] = 0;
-    core->data_mem[11] = 0;
-    core->data_mem[12] = 0;
-    core->data_mem[13] = 0;
-    core->data_mem[14] = 0;
-    core->data_mem[15] = 0;
-
-    core->data_mem[16] = 8;
-    core->data_mem[17] = 0;
-    core->data_mem[18] = 0;
-    core->data_mem[19] = 0;
-    core->data_mem[20] = 0;
-    core->data_mem[21] = 0;
-    core->data_mem[22] = 0; 
-    core->data_mem[23] = 0;
-
-    core->data_mem[24] = 4;
-    core->data_mem[25] = 0;
-    core->data_mem[26] = 0;
-    core->data_mem[27] = 0;
-    core->data_mem[28] = 0;
-    core->data_mem[29] = 0;
-    core->data_mem[30] = 0;
-    core->data_mem[31] = 0;
-
-
+	
 
     // FIXME, initialize data memory here.
     // core->reg_file[0] = ...
 
-    //set the reg_file
-    core->reg_file[25] = 4;
-    core->reg_file[10] = 4;
-    core->reg_file[22] = 1;
+    //set the reg_files for holding the offset
+    core->reg_file[25] = 0; // offset
+    
 
     return core;
 }
@@ -128,7 +97,7 @@ bool tickFunc(Core *core)
     mem_result= mem_result<< 40 | core->data_mem[ALU_output + 2];
     mem_result= mem_result<< 48 | core->data_mem[ALU_output + 1];
     mem_result= mem_result<< 56 | core->data_mem[ALU_output + 0];
-    printf("%ld\n", mem_result);
+    printf("mem result - %ld\n", mem_result);
 
     if(signals.RegWrite)
     {
