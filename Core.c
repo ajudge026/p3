@@ -16,10 +16,44 @@ Core *initCore(Instruction_Memory *i_mem)
     //uint64_t arr[] = {16, 128, 8, 4};
 
 
-	for (i = 0; i <16; i++	)
-	{
-		core->reg_file[i * 8] = 4;
-	}
+    core->data_mem[0] = 16;
+    core->data_mem[1] = 0;
+    core->data_mem[2] = 0;
+    core->data_mem[3] = 0;
+    core->data_mem[4] = 0;
+    core->data_mem[5] = 0;
+    core->data_mem[6] = 0;
+    core->data_mem[7] = 0;
+
+
+    core->data_mem[8] = 128;
+    core->data_mem[9] = 0;
+    core->data_mem[10] = 0;
+    core->data_mem[11] = 0;
+    core->data_mem[12] = 0;
+    core->data_mem[13] = 0;
+    core->data_mem[14] = 0;
+    core->data_mem[15] = 0;
+
+    core->data_mem[16] = 8;
+    core->data_mem[17] = 0;
+    core->data_mem[18] = 0;
+    core->data_mem[19] = 0;
+    core->data_mem[20] = 0;
+    core->data_mem[21] = 0;
+    core->data_mem[22] = 0; 
+    core->data_mem[23] = 0;
+
+    core->data_mem[24] = 4;
+    core->data_mem[25] = 0;
+    core->data_mem[26] = 0;
+    core->data_mem[27] = 0;
+    core->data_mem[28] = 0;
+    core->data_mem[29] = 0;
+    core->data_mem[30] = 0;
+    core->data_mem[31] = 0;
+
+
 
     // FIXME, initialize data memory here.
     // core->reg_file[0] = ...
