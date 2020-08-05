@@ -25,7 +25,7 @@ void loadInstructions(Instruction_Memory *i_mem, const char *trace)
         // Assign program counter
         i_mem->instructions[IMEM_index].addr = PC;
 
-        // Extract operation for R-Type
+        // Extract operation
         char *raw_instr = strtok(line, " ");
         if (strcmp(raw_instr, "add") == 0 ||
             strcmp(raw_instr, "sub") == 0 ||
@@ -35,39 +35,31 @@ void loadInstructions(Instruction_Memory *i_mem, const char *trace)
             strcmp(raw_instr, "or")  == 0 ||
             strcmp(raw_instr, "and") == 0)
         {
-		printf("The type of instruction is: %s\n", raw_instr);
             parseRType(raw_instr, &(i_mem->instructions[IMEM_index]));
             i_mem->last = &(i_mem->instructions[IMEM_index]);
-        }
-		
-		// Extract operation for I-Type		
-	else if (strcmp(raw_instr, "addi") == 0 ||
-            strcmp(raw_instr, "slli") == 0 ||
-             strcmp(raw_instr, "ld") == 0 )
+	}
+
+         if (strcmp(raw_instr, "ld") == 0   ||
+             strcmp(raw_instr, "addi") == 0 ||
+             strcmp(raw_instr, "slli") == 0)
         {
-		printf("The type of instruction is: %s\n", raw_instr);
-    		parseIType(raw_instr, &(i_mem->instructions[IMEM_index]));
+            parseIType(raw_instr, &(i_mem->instructions[IMEM_index]));
             i_mem->last = &(i_mem->instructions[IMEM_index]);
         }
-		
-		
-		// Extract operation for SB-Type		
-     else if (strcmp(raw_instr, "bne") == 0  )
+
+        if (strcmp(raw_instr, "bne") == 0)
         {
             parseSBType(raw_instr, &(i_mem->instructions[IMEM_index]));
             i_mem->last = &(i_mem->instructions[IMEM_index]);
-        } 
+        }
+
 
         IMEM_index++;
- PC += 4;
+        PC += 4;
     }
 
     fclose(fd);
 }
-
-
-
-
 
 void parseRType(char *opr, Instruction *instr)
 {
@@ -102,159 +94,175 @@ void parseRType(char *opr, Instruction *instr)
     instr->instruction |= (funct7 << (7 + 5 + 3 + 5 + 5));
 }
 
-
-
-
 void parseIType(char *opr, Instruction *instr)
 {
     instr->instruction = 0;
     unsigned opcode = 0;
     unsigned funct3 = 0;
-    unsigned immediate = 0;
+    
+
+    if (strcmp(opr, "ld") == 0)
+    {
+        opcode = 3;
+        funct3 = 3;
+
+        char *reg = strtok(NULL, ", ");
+        unsigned rd = regIndex(reg);
+
+        reg = strtok(NULL, "( ");
+        unsigned immediate = atoi(reg);
+        
+        reg = strtok(NULL, ")");
+        // reg[strlen(reg)-1] = '\0';
+        unsigned rs_1 = regIndex(reg);
+
+        if (immediate < 0) {
+            // Contruct instruction
+            immediate = abs(immediate);
+            instr->instruction |= opcode;
+            instr->instruction |= (rd << 7);
+            instr->instruction |= (funct3 << (7 + 5));
+            instr->instruction |= (rs_1  << (7 + 5 + 3)); 
+            // instr->instruction |= (rs_2 << (7 + 5 + 3 + 5));
+            instr->instruction |= ((~immediate + 1) << (7 + 5 + 3 + 5)); 
+        }
+        else{
+            // Contruct instruction
+            instr->instruction |= opcode;
+            instr->instruction |= (rd << 7);
+            instr->instruction |= (funct3 << (7 + 5));
+            instr->instruction |= (rs_1 << (7 + 5 + 3));
+            // instr->instruction |= (rs_2 << (7 + 5 + 3 + 5));
+            instr->instruction |= (immediate << (7 + 5 + 3 + 5));
+        }
+    }
 
     if (strcmp(opr, "addi") == 0)
     {
         opcode = 19;
-        funct3 = 0;       
-    
+        funct3 = 0;
+            
+        char *reg = strtok(NULL, ", ");
+        unsigned rd = regIndex(reg);
 
-		char *reg = strtok(NULL, ", ");
-		unsigned rd = regIndex(reg);
+        reg = strtok(NULL, ", ");
+        unsigned rs_1 = regIndex(reg);
+        
+        reg = strtok(NULL, ", ");
+        // reg[strlen(reg)-1] = '\0';
+        unsigned immediate = atoi(reg);
+     
+        if (immediate < 0) {
+            immediate = abs(immediate); 
+            // Contruct instruction
+            instr->instruction |= opcode;
+            instr->instruction |= (rd << 7);
+            instr->instruction |= (funct3 << (7 + 5));
+            instr->instruction |= (rs_1 << (7 + 5 + 3));
+            // instr->instruction |= (rs_2 << (7 + 5 + 3 + 5));
+            instr->instruction |= ((~immediate + 1) << (7 + 5 + 3 + 5));
+        }
 
-		reg = strtok(NULL, ", ");
-		unsigned rs_1 = regIndex(reg);
+        else{
+            // Contruct instruction
+            instr->instruction |= opcode;
+            instr->instruction |= (rd << 7);
+            instr->instruction |= (funct3 << (7 + 5));
+            instr->instruction |= (rs_1 << (7 + 5 + 3));
+            // instr->instruction |= (rs_2 << (7 + 5 + 3 + 5));
+            instr->instruction |= (immediate << (7 + 5 + 3 + 5));
+        }
+        
+    }
 
-		reg = strtok(NULL, ", ");
-		reg[strlen(reg)-1] = '\0';
-		unsigned imm = atoi(reg);
-		
-
-		// Contruct instruction
-		instr->instruction |= opcode;
-		instr->instruction |= (rd << 7);
-		instr->instruction |= (funct3 << (7 + 5));
-		instr->instruction |= (rs_1 << (7 + 5 + 3));
-		instr->instruction |= (imm << (7 + 5 + 3 + 5));		
-	}
-	else if (strcmp(opr, "ld") == 0 )
-	{
-		opcode = 3;
-        funct3 = 3;       
-		  
-
-		char *reg = strtok(NULL, ", ");
-		char *immChar = strtok(NULL, "(");
-		unsigned imm = atoi(immChar);
-		unsigned rd = regIndex(reg);
-
-		reg = strtok(NULL, ")");
-		unsigned rs_1 = regIndex(reg);
-
-		// Contruct instruction
-		instr->instruction |= opcode;
-		instr->instruction |= (rd << 7);
-		instr->instruction |= (funct3 << (7 + 5));
-		instr->instruction |= (rs_1 << (7 + 5 + 3));
-		instr->instruction |= (imm << (7 + 5 + 3 + 5));	
-		
-	}
-	
-	if (strcmp(opr, "slli") == 0)
+    if (strcmp(opr, "slli") == 0)
     {
         opcode = 19;
-        funct3 = 1;       
+        funct3 = 1;
+            
+        char *reg = strtok(NULL, ", ");
+        unsigned rd = regIndex(reg);
+
+        reg = strtok(NULL, ", ");
+        unsigned rs_1 = regIndex(reg);
+        
+        reg = strtok(NULL, ", ");
+        // reg[strlen(reg)-1] = '\0';
+        unsigned immediate = atoi(reg);
+
+        // Contruct instruction
+     instr->instruction |= opcode;
+     instr->instruction |= (rd << 7);
+     instr->instruction |= (funct3 << (7 + 5));
+     instr->instruction |= (rs_1 << (7 + 5 + 3));
+     // instr->instruction |= (rs_2 << (7 + 5 + 3 + 5));
+     instr->instruction |= (immediate << (7 + 5 + 3 + 5));
+        
+    }
+ 
     
+    // unsigned immediate = regIndex(reg);
+    
+    // reg = strtok(NULL, ", ");
+    // reg[strlen(reg)-1] = '\0';
+    // unsigned immediate = regIndex(reg);
 
-		char *reg = strtok(NULL, ", ");
-		unsigned rd = regIndex(reg);
-
-		reg = strtok(NULL, ", ");
-		unsigned rs_1 = regIndex(reg);
-
-		reg = strtok(NULL, ", ");
-		reg[strlen(reg)-1] = '\0';
-		unsigned shamt = atoi(reg);
-
-		// Contruct instruction
-		instr->instruction |= opcode;
-		instr->instruction |= (rd << 7);
-		instr->instruction |= (funct3 << (7 + 5));
-		instr->instruction |= (rs_1 << (7 + 5 + 3));
-		instr->instruction |= (shamt << (7 + 5 + 3 + 5));		
-		instr->instruction |= (0 << (7 + 5 + 3 + 5 + 5));		
-		
-	}
 }
 
-
- void parseSBType(char *opr, Instruction *instr)
+void parseSBType(char *opr, Instruction *instr)
 {
     instr->instruction = 0;
     unsigned opcode = 0;
-    unsigned funct3 = 0;    
+    unsigned funct3 = 0;
+    unsigned funct7 = 0;
+
     if (strcmp(opr, "bne") == 0)
     {
-        opcode = 103;
-        funct3 = 1;       
+        opcode = 99;
+        funct3 = 1;
+    }
+
+    char *reg = strtok(NULL, ", ");
+    unsigned rs_1 = regIndex(reg);
+
+    reg = strtok(NULL, ", ");
+    unsigned rs_2 = regIndex(reg);
+
+    reg = strtok(NULL, ", ");
+    reg[strlen(reg)-1] = '\0';
+    unsigned immediate = atoi(reg);  
     
-		char *reg = strtok(NULL, ", ");
-		unsigned rs_1 = regIndex(reg);
-		reg = strtok(NULL, ", ");
-		unsigned rs_2 = regIndex(reg);
-		reg = strtok(NULL, ", ");
-		reg[strlen(reg)-1] = '\0';		
-		int imm = atoi(reg);
-		printf("The imm initial number is %d\n",imm);
-		int neg = 0;
-		unsigned int imm1, imm2, imm3, imm4;
-		if(imm < 0)
-		{
-			//two's comp 
-			imm = (~abs(imm) )+1;
-			neg = 1;
-			
-		}
-		printf("The twos comp of the imm is %d\n",imm);
-		// Contruct instruction				
-		imm1 = imm; // imm 11
-		imm1 = (imm1 & (1 << 10)) ;
-		imm1 = imm1 >> 10;	
-		imm2 = imm; // imm 4:1
-		imm2 = 15&imm2;// [4:1]
-		imm3 = imm;
-		imm3 = 63&(imm3>>4); // imm 10:5
-		
-		instr->instruction |= opcode;		
-		instr->instruction |= (imm1 << 7);
-		instr->instruction |= (imm2 << (7 + 1));		
-		instr->instruction |= (funct3 << (7 + 1 +  4));
-		instr->instruction |= (rs_1 << (7 + 1 +  4 + 3));		
-		instr->instruction |= (rs_2 << (7+1+4+3+5));
-		instr->instruction |= (imm3 << (7+1+4+3+5+5));	
-		instr->instruction |= (neg << (7+1+4+3+5+5+6));			
-		
-		printf("opcode -%d\n",opcode);
-		printf("imm1 -%d\n",imm1);
-		printf("imm2 -%d\n",imm2);
-		printf("funct3-%d\n",funct3);
-		printf("rs_1 -%d\n",rs_1);
-		printf("rs_2-%d\n",rs_2);
-		printf("imm3-%d\n",imm3);
-		printf("neg -%d\n",neg);
-		
-	}
+    if (immediate < 0){
+        immediate = abs(immediate);
+         // Contruct instruction
+        instr->instruction |= opcode;
+        instr->instruction |= ((((~immediate + 1) & (1 << 11)) >> 11) << 7);            //2's complement embeded in the shifting (negate/invert then add 1)
+        instr->instruction |= ((((1 << 4) - 1) & ((~immediate + 1) >> (2 - 1))) << (7 + 1));
+        instr->instruction |= (funct3 << (7 + 1 + 4));
+        instr->instruction |= (rs_1 << (7 + 1 + 4 + 3));
+        instr->instruction |= (rs_2 << (7 + 1 + 4 + 3 + 5));
+        instr->instruction |= ((((1 << 9) - 1) & ((~immediate + 1) >> (6 - 1))) << (7 + 1 + 4 + 3 + 5 + 5));
+        instr->instruction |= ((((~immediate + 1) & (1 << 12)) >> 12) << (7 + 1 + 4 + 3 + 5 + 5 + 6));
+
+    }
+
+    else{
+        // Contruct instruction
+        instr->instruction |= opcode;
+        instr->instruction |= (((immediate  & (1 << 11)) >> 11) << 7);            //2's complement embeded in the shifting (negate/invert then add 1)
+        instr->instruction |= ((((1 << 4) - 1) & (immediate >> (2 - 1))) << (7 + 1));
+        instr->instruction |= (funct3 << (7 + 1 + 4));
+        instr->instruction |= (rs_1 << (7 + 1 + 4 + 3));
+        instr->instruction |= (rs_2 << (7 + 1 + 4 + 3 + 5));
+        instr->instruction |= ((((1 << 9) - 1) & (immediate >> (6 - 1))) << (7 + 1 + 4 + 3 + 5 + 5));
+        instr->instruction |= (((immediate & (1 << 12)) >> 12) << (7 + 1 + 4 + 3 + 5 + 5 + 6));
+    }
 }
- 
-
-
-
-
 
 int regIndex(char *reg)
 {
     unsigned i = 0;
-                                            
-for (i; i < NUM_OF_REGS; i++)
+    for (i; i < NUM_OF_REGS; i++)
     {
         if (strcmp(REGISTER_NAME[i], reg) == 0)
         {
