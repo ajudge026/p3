@@ -180,6 +180,7 @@ void parseIType(char *opr, Instruction *instr)
 		instr->instruction |= (rd << 7);
 		instr->instruction |= (funct3 << (7 + 5));
 		instr->instruction |= (rs_1 << (7 + 5 + 3));
+ 
 		instr->instruction |= (shamt << (7 + 5 + 3 + 5));		
 		instr->instruction |= (0 << (7 + 5 + 3 + 5 + 5));		
 		
@@ -244,8 +245,44 @@ void parseIType(char *opr, Instruction *instr)
 		
 	}
 }
- 
 
+
+
+
+
+ void parseSType(char *opr, Instruction *instr)
+{
+    instr->instruction = 0;
+    unsigned opcode = 0;
+    unsigned funct3 = 0;    
+    if (strcmp(opr, "sw") == 0)
+    {
+        opcode = 35;
+        funct3 = 2;       
+		
+		char *reg = strtok(NULL, ", ");
+		unsigned rs_1 = regIndex(reg);
+		reg = strtok(NULL, ", ");
+		char *offset = strtok(NULL, "(");
+		reg = strtok(NULL, ")");
+		reg[strlen(reg)-1] = '\0';	
+		unsigned rs_2 = regIndex(reg);		
+		
+					
+		
+		
+		
+		instr->instruction |= opcode;		
+		instr->instruction |= (imm1 << 7);
+		instr->instruction |= (funct3 << (7 + 5));		
+		instr->instruction |= (rs_1 << (7+5+3));
+		instr->instruction |= (rs_2 << (7+5+3+5));		
+		instr->instruction |= (imm2 << (7+5+3+5+5));			
+		
+	
+		
+	}
+}
 
 
 
