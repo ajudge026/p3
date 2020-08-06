@@ -83,7 +83,8 @@ bool tickFunc(Core *core)
     Signal ALU_output;
 	
     Signal zero_alu_input;
-
+	printf("alu input 0 - %ld\n", alu_in_0);
+	printf("alu input 1 - %ld\n", alu_in_1);
     ALU(alu_in_0, alu_in_1, ALU_ctrl_signal, &ALU_output, &zero_alu_input);
     //printf("ALU out: %ld\n", ALU_output);
 
@@ -121,8 +122,9 @@ bool tickFunc(Core *core)
 
     Signal shifted_immediate = ShiftLeft1(ImmeGen(input));
 	printf("the non shifted immediate is - %ld\n", ImmeGen(input));
-	printf("the mux input is - %ld\n", (zero_alu_input && signals.Branch));
+	printf("the mux input is - %d\n", (zero_alu_input && signals.Branch));
 	printf("the zero_alu_input is - %ld\n", zero_alu_input );
+	printf("the alu control is - %ld\n",ALU_ctrl_signal  );
 	printf("signals.Branch is - %ld\n",  signals.Branch);
 	printf("the shifted immediate is  - %ld\n", shifted_immediate);
     core->PC = Add(core->PC, MUX((zero_alu_input & signals.Branch), 4, (signed int)shifted_immediate));
@@ -312,6 +314,7 @@ void ALU(Signal input_0,
     if (ALU_ctrl_signal == 6)
     {
         *ALU_result = (input_0 - input_1);
+		printf("ALU RESULT - %ld", (input_0 - input_1));
         if (*ALU_result != 0) { *zero = 1; } else { *zero = 0; }
     }
     // For shift left
