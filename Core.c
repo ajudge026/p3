@@ -54,7 +54,7 @@ bool tickFunc(Core *core)
     
 	// (Step 2) ...
 	// prints instructions in decimal
-	printf("Instruction: %u\n", instruction);
+	//printf("Instruction: %u\n", instruction);
     
 
     Signal input = (instruction & 127);
@@ -85,7 +85,7 @@ bool tickFunc(Core *core)
     Signal zero_alu_input;
 
     ALU(alu_in_0, alu_in_1, ALU_ctrl_signal, &ALU_output, &zero_alu_input);
-    printf("ALU out: %ld\n", ALU_output);
+    //printf("ALU out: %ld\n", ALU_output);
 
     Register write_reg = (instruction >> 7) & 31;
 
@@ -107,7 +107,7 @@ bool tickFunc(Core *core)
     mem_result= mem_result<< 40 | core->data_mem[ALU_output + 2];
     mem_result= mem_result<< 48 | core->data_mem[ALU_output + 1];
     mem_result= mem_result<< 56 | core->data_mem[ALU_output + 0];
-    printf("mem result - %ld\n", mem_result);
+    //printf("mem result - %ld\n", mem_result);
 
     if(signals.RegWrite)
     {
@@ -116,14 +116,14 @@ bool tickFunc(Core *core)
 
 
 
-    printf("Register x9 -  %ld\n", core->reg_file[9]); 
-    printf("Register x11 -  %ld\n", core->reg_file[11]);
+    //printf("Register x9 -  %ld\n", core->reg_file[9]); 
+    //printf("Register x11 -  %ld\n", core->reg_file[11]);
 
     Signal shifted_immediate = ShiftLeft1(ImmeGen(input));
 	
     core->PC = Add(core->PC, MUX((zero_alu_input & signals.Branch), 4, (signed int)shifted_immediate));
 	
-    printf("ending Program Counter: %ld\n", core->PC);
+    //printf("ending Program Counter: %ld\n", core->PC);
 
 
 
@@ -142,6 +142,7 @@ void ControlUnit(Signal input,
 {
     // For R-type
     if (input == 51) {
+		printf("RType\n"); 
         signals->ALUSrc = 0;
         signals->MemtoReg = 0;
         signals->RegWrite = 1;
@@ -152,6 +153,7 @@ void ControlUnit(Signal input,
     }
     // For ld 
     if (input == 3) { //opcode
+	    printf("ld %ld\n"); 
         signals->ALUSrc = 1;
         signals->MemtoReg = 1;
         signals->RegWrite = 1;
@@ -162,6 +164,7 @@ void ControlUnit(Signal input,
     }
     // For addi , slli 
     if (input == 19){
+		printf("slli%ld\n"); 		
         signals->ALUSrc = 1;
         signals->MemtoReg = 1;
         signals->RegWrite = 1;
@@ -173,6 +176,7 @@ void ControlUnit(Signal input,
 	
     // For sd (S-type)
     if (input == 35){
+		printf("sw\n"); 
         signals->ALUSrc = 1;
         signals->MemtoReg = 0; 
         signals->RegWrite = 0;
@@ -183,7 +187,8 @@ void ControlUnit(Signal input,
     }
     // For beq (SB-type)
     if (input == 99){ //opcode
-        signals->ALUSrc = 0;
+        printf("bne\n"); 
+		signals->ALUSrc = 0;		
         signals->MemtoReg = 0; 
         signals->RegWrite = 0;
         signals->MemRead = 0;
