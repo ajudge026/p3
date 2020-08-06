@@ -35,7 +35,7 @@ void loadInstructions(Instruction_Memory *i_mem, const char *trace)
             strcmp(raw_instr, "or")  == 0 ||
             strcmp(raw_instr, "and") == 0)
         {
-		printf("The type of instruction is: %s\n", raw_instr);
+		//printf("The type of instruction is: %s\n", raw_instr);
             parseRType(raw_instr, &(i_mem->instructions[IMEM_index]));
             i_mem->last = &(i_mem->instructions[IMEM_index]);
         }
@@ -45,7 +45,7 @@ void loadInstructions(Instruction_Memory *i_mem, const char *trace)
             strcmp(raw_instr, "slli") == 0 ||
              strcmp(raw_instr, "ld") == 0 )
         {
-		printf("The type of instruction is: %s\n", raw_instr);
+		//printf("The type of instruction is: %s\n", raw_instr);
     		parseIType(raw_instr, &(i_mem->instructions[IMEM_index]));
             i_mem->last = &(i_mem->instructions[IMEM_index]);
         }
@@ -212,7 +212,7 @@ void parseIType(char *opr, Instruction *instr)
 		reg = strtok(NULL, ", ");
 		reg[strlen(reg)-1] = '\0';		
 		int imm = atoi(reg);
-		printf("The imm initial number is %d\n",imm);
+		//printf("The imm initial number is %d\n",imm);
 		int neg = 0;
 		unsigned int imm1, imm2, imm3, imm4;
 		if(imm < 0)
@@ -222,7 +222,7 @@ void parseIType(char *opr, Instruction *instr)
 			neg = 1;
 			
 		}
-		printf("The twos comp of the imm is %d\n",imm);
+		//printf("The twos comp of the imm is %d\n",imm);
 		// Contruct instruction				
 		imm1 = imm; // imm 11
 		imm1 = (imm1 & (1 << 10)) ;
@@ -241,14 +241,14 @@ void parseIType(char *opr, Instruction *instr)
 		instr->instruction |= (imm3 << (7+1+4+3+5+5));	
 		instr->instruction |= (neg << (7+1+4+3+5+5+6));			
 		
-		printf("opcode -%d\n",opcode);
-		printf("imm1 -%d\n",imm1);
-		printf("imm2 -%d\n",imm2);
-		printf("funct3-%d\n",funct3);
-		printf("rs_1 -%d\n",rs_1);
-		printf("rs_2-%d\n",rs_2);
-		printf("imm3-%d\n",imm3);
-		printf("neg -%d\n",neg);
+		//printf("opcode -%d\n",opcode);
+		//printf("imm1 -%d\n",imm1);
+		//printf("imm2 -%d\n",imm2);
+		//printf("funct3-%d\n",funct3);
+		//printf("rs_1 -%d\n",rs_1);
+		//printf("rs_2-%d\n",rs_2);
+		//printf("imm3-%d\n",imm3);
+		//printf("neg -%d\n",neg);
 		
 	}
 }
