@@ -120,7 +120,7 @@ bool tickFunc(Core *core)
     //printf("Register x11 -  %ld\n", core->reg_file[11]);
 
     Signal shifted_immediate = ShiftLeft1(ImmeGen(input));
-	printf("%dd", shifted_immediate);
+	printf("%ld\n", shifted_immediate);
     core->PC = Add(core->PC, MUX((zero_alu_input & signals.Branch), 4, (signed int)shifted_immediate));
 	
     printf(" Program Counter: %ld\n", core->PC);
