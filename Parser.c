@@ -202,7 +202,7 @@ void parseIType(char *opr, Instruction *instr)
     unsigned funct3 = 0;    
     if (strcmp(opr, "bne") == 0)
     {
-        opcode = 103;
+        opcode = 99;
         funct3 = 1;       
     
 		char *reg = strtok(NULL, ", ");
