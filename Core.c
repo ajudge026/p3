@@ -133,7 +133,7 @@ bool tickFunc(Core *core)
 	printf("signals.Branch is - %ld\n",  signals.Branch);
 	printf("the non shifted immediate is - %ld\n", ImmeGen(input));
 	printf("the shifted immediate is  - %ld\n", shifted_immediate);
-	signal mux_output = MUX((zero_alu_input & signals.Branch), 4, (signed int)shifted_immediate);
+	Signal mux_output = MUX((zero_alu_input & signals.Branch), 4, (signed int)shifted_immediate);
     core->PC = Add(core->PC, mux_output);
 	
     printf(" Program Counter: %ld\n", core->PC);
@@ -146,7 +146,7 @@ bool tickFunc(Core *core)
     // Are we reaching the final instruction?
     if (core->PC > core->instr_mem->last->addr)
     {
-		printf("the datamem stored is - %ld ", data_mem[0]);
+		printf("the datamem stored is - %ld ", core->data_mem[0]);
         return false;
     }
     return true;
