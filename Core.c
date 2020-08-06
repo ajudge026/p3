@@ -41,6 +41,7 @@ Core *initCore(Instruction_Memory *i_mem)
 	 core->reg_file[22] = 0; 
 	 core->reg_file[27] = 1; 	
     core->reg_file[26] = 4; 
+	core->reg_file[30] = 0; 
     
     //score->reg_file[25] = 0; // offset
     
@@ -132,17 +133,20 @@ bool tickFunc(Core *core)
 	printf("signals.Branch is - %ld\n",  signals.Branch);
 	printf("the non shifted immediate is - %ld\n", ImmeGen(input));
 	printf("the shifted immediate is  - %ld\n", shifted_immediate);
-	Signal mux_output = MUX((zero_alu_input & signals.Branch), 4, (signed int)shifted_immediate);
+	signal mux_output = MUX((zero_alu_input & signals.Branch), 4, (signed int)shifted_immediate);
     core->PC = Add(core->PC, mux_output);
 	
     printf(" Program Counter: %ld\n", core->PC);
 
 
-
+	
+		
+	
     ++core->clk;
     // Are we reaching the final instruction?
     if (core->PC > core->instr_mem->last->addr)
     {
+		printf("the datamem stored is - %ld ", data_mem[0]);
         return false;
     }
     return true;
@@ -351,4 +355,10 @@ Signal Add(Signal input_0,
 Signal ShiftLeft1(Signal input)
 {
     return input << 2; //<--------------------------------------------------- why? 
+}
+
+// regwrite 
+ void regWrite(Signal MemWrite, Signal *data_mem, Signal data, Signal *address )
+{
+		
 }
