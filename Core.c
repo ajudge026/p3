@@ -153,7 +153,7 @@ void ControlUnit(Signal input,
     }
     // For ld 
     if (input == 3) { //opcode
-	    printf("ld %ld\n"); 
+	    printf("ld\n"); 
         signals->ALUSrc = 1;
         signals->MemtoReg = 1;
         signals->RegWrite = 1;
@@ -164,7 +164,7 @@ void ControlUnit(Signal input,
     }
     // For addi , slli 
     if (input == 19){
-		printf("slli%ld\n"); 		
+		printf("slli\n"); 		
         signals->ALUSrc = 1;
         signals->MemtoReg = 1;
         signals->RegWrite = 1;
