@@ -174,7 +174,7 @@ void ControlUnit(Signal input,
         signals->ALUOp = 0;
     }
     // For addi , slli 
-    if (input ==  ){
+    if (input == 19 ){
 		printf("slli\n"); 		
         signals->ALUSrc = 1;
         signals->MemtoReg = 1;
