@@ -36,9 +36,12 @@ Core *initCore(Instruction_Memory *i_mem)
     // core->reg_file[0] = ...
 
     //set the reg_files for holding the offset
-	 core->reg_file[25] = 4;
-    core->reg_file[10] = 4; 
-    core->reg_file[22] = 1;
+	 core->reg_file[20] = 0;
+	 core->reg_file[21] = 0;
+	 core->reg_file[22] = 0; 
+	 core->reg_file[27] = 1; 	
+    core->reg_file[26] = 4; 
+    
     //score->reg_file[25] = 0; // offset
     
 
@@ -77,7 +80,9 @@ bool tickFunc(Core *core)
 
     //create signal input to ALU from read data 1 output
     Signal alu_in_0;
-    alu_in_0 = core->reg_file[reg_1];
+    printf("reg1 - %ld\n", reg_1);
+	printf("reg2 - %ld\n", reg_2);
+	alu_in_0 = core->reg_file[reg_1];
 
     Signal alu_in_1 = MUX(signals.ALUSrc,core->reg_file[reg_2],ImmeGen(instruction));
     Signal ALU_output;
@@ -120,14 +125,14 @@ bool tickFunc(Core *core)
     //printf("Register x9 -  %ld\n", core->reg_file[9]); 
     //printf("Register x11 -  %ld\n", core->reg_file[11]);
 
-    Signal shifted_immediate = ShiftLeft1(ImmeGen(input));
-	printf("the non shifted immediate is - %ld\n", ImmeGen(input));
+    Signal shifted_immediate = ShiftLeft1(ImmeGen(input));	
 	printf("the mux input is - %d\n", (zero_alu_input && signals.Branch));
 	printf("the zero_alu_input is - %ld\n", zero_alu_input );
 	printf("the alu control is - %ld\n",ALU_ctrl_signal  );
 	printf("signals.Branch is - %ld\n",  signals.Branch);
+	printf("the non shifted immediate is - %ld\n", ImmeGen(input));
 	printf("the shifted immediate is  - %ld\n", shifted_immediate);
-    core->PC = Add(core->PC, MUX((zero_alu_input & signals.Branch), 4, (signed int)shifted_immediate));
+    core->PC = Add(core->PC, MUX((zero_alu_input & signals.Branch), 4, (core->PC+(signed int)shifted_immediate)));
 	
     printf(" Program Counter: %ld\n", core->PC);
 
@@ -169,7 +174,7 @@ void ControlUnit(Signal input,
         signals->ALUOp = 0;
     }
     // For addi , slli 
-    if (input == 19){
+    if (input ==  ){
 		printf("slli\n"); 		
         signals->ALUSrc = 1;
         signals->MemtoReg = 1;
@@ -278,7 +283,7 @@ Signal ImmeGen(Signal input)
     //bne
     if (input == 99)    {
         //  111111111110;
-        immediate = -4;
+        immediate = -1; //<------------------------ fix this 
     }
 
     return immediate;
