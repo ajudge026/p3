@@ -121,8 +121,10 @@ bool tickFunc(Core *core)
 
     Signal shifted_immediate = ShiftLeft1(ImmeGen(input));
 	printf("the non shifted immediate is - %ld\n", ImmeGen(input));
-	printf("the sifted immediate is - %ld\n", (zero_alu_input && signals.Branch));
-	printf("the mux input is - %ld\n", shifted_immediate);
+	printf("the mux input is - %ld\n", (zero_alu_input && signals.Branch));
+	printf("the zero_alu_input is - %ld\n", zero_alu_input );
+	printf("signals.Branch is - %ld\n",  signals.Branch);
+	printf("the shifted immediate is  - %ld\n", shifted_immediate);
     core->PC = Add(core->PC, MUX((zero_alu_input & signals.Branch), 4, (signed int)shifted_immediate));
 	
     printf(" Program Counter: %ld\n", core->PC);
