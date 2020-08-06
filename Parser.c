@@ -56,7 +56,14 @@ void loadInstructions(Instruction_Memory *i_mem, const char *trace)
         {
             parseSBType(raw_instr, &(i_mem->instructions[IMEM_index]));
             i_mem->last = &(i_mem->instructions[IMEM_index]);
-        } 
+        }
+			
+		// Extract operation for S-Type		
+     else if (strcmp(raw_instr, "sw") == 0  )
+        {
+            parseSType(raw_instr, &(i_mem->instructions[IMEM_index]));
+            i_mem->last = &(i_mem->instructions[IMEM_index]);
+        }
 
         IMEM_index++;
  PC += 4;
@@ -258,7 +265,8 @@ void parseIType(char *opr, Instruction *instr)
     if (strcmp(opr, "sw") == 0)
     {
         opcode = 35;
-        funct3 = 2;       
+        funct3 = 2;  
+		int imm1, imm2 = 0;
 		
 		char *reg = strtok(NULL, ", ");
 		unsigned rs_1 = regIndex(reg);
