@@ -60,7 +60,7 @@ bool tickFunc(Core *core)
     Signal input = (instruction & 127);
 	// prints opcode in decimal
 	
-    printf("Opcode: %ld\n", input); 
+    //printf("Opcode: %ld\n", input); 
 	
 	//holds signals from the controller
     ControlSignals signals;
@@ -142,7 +142,7 @@ void ControlUnit(Signal input,
 {
     // For R-type
     if (input == 51) {
-		printf("RType\n"); 
+		printf("RType - %ld\n", *input); 
         signals->ALUSrc = 0;
         signals->MemtoReg = 0;
         signals->RegWrite = 1;
@@ -153,7 +153,7 @@ void ControlUnit(Signal input,
     }
     // For ld 
     if (input == 3) { //opcode
-	    printf("ld\n"); 
+	    printf("ld - %ld\n", *input); 
         signals->ALUSrc = 1;
         signals->MemtoReg = 1;
         signals->RegWrite = 1;
@@ -164,7 +164,7 @@ void ControlUnit(Signal input,
     }
     // For addi , slli 
     if (input == 19){
-		printf("slli\n"); 		
+		printf("slli - %ld\n", *input); 		
         signals->ALUSrc = 1;
         signals->MemtoReg = 1;
         signals->RegWrite = 1;
@@ -176,7 +176,7 @@ void ControlUnit(Signal input,
 	
     // For sd (S-type)
     if (input == 35){
-		printf("sw\n"); 
+		printf("sw - %ld\n", *input); 
         signals->ALUSrc = 1;
         signals->MemtoReg = 0; 
         signals->RegWrite = 0;
@@ -187,7 +187,7 @@ void ControlUnit(Signal input,
     }
     // For beq (SB-type)
     if (input == 99){ //opcode
-        printf("bne\n"); 
+        printf("bne - %ld\n", *input); 
 		signals->ALUSrc = 0;		
         signals->MemtoReg = 0; 
         signals->RegWrite = 0;
