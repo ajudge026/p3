@@ -96,7 +96,9 @@ bool tickFunc(Core *core)
 
     Register write_reg = (instruction >> 7) & 31;
 
-    if(signals.MemWrite)
+    printf("alu output should be destination address - %u\n", ALU_output);
+	printf("alu_in_1 should be data to write - %u\n", alu_in_1);
+	if(signals.MemWrite)
     {
         core->data_mem[ALU_output] = alu_in_1;
     }
@@ -199,7 +201,7 @@ void ControlUnit(Signal input,
         signals->MemRead = 0;
         signals->MemWrite = 1;
         signals->Branch = 0;
-        signals->ALUOp = 0;
+        signals->ALUOp = 69;
     }
     // For beq (SB-type)
     if (input == 99){ //opcode
@@ -243,13 +245,15 @@ Signal ALUControlUnit(Signal ALUOp,
         return 1;
     }
 
+
+	
     // ld 
     if (ALUOp == 0)
     {
         return 2;
     }
     //  sd
-    if (ALUOp == 0)
+    if (ALUOp == 69)
     {
         return 2;
     }
@@ -304,6 +308,12 @@ void ALU(Signal input_0,
 {
     // For addition
     if (ALU_ctrl_signal == 2)
+    {
+        *ALU_result = (input_0 + input_1);
+        if (*ALU_result == 0) { *zero = 1; } else { *zero = 0; }
+    }
+	// For addition sd may need to change 
+    if (ALU_ctrl_signal == 69)
     {
         *ALU_result = (input_0 + input_1);
         if (*ALU_result == 0) { *zero = 1; } else { *zero = 0; }
