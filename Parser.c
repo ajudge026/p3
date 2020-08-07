@@ -258,7 +258,7 @@ void parseIType(char *opr, Instruction *instr)
     instr->instruction = 0;
     unsigned opcode = 0;
     unsigned funct3 = 0;   	
-	printf("s-type inside of funtcion\n");	
+	//printf("s-type inside of funtcion\n");	
     if (strcmp(opr, "sw") == 0)
     {
          opcode = 35;
@@ -271,12 +271,12 @@ void parseIType(char *opr, Instruction *instr)
 		char *offset = strtok(NULL, "(");
 		reg = strtok(NULL, ")");		
 		unsigned rs_2 = regIndex(reg);	
-		printf("the opcode is %u\n",opcode);
-		printf("the imm1 is %u\n",imm1);
-		printf("the funct3 is %u\n",funct3);
-		printf("the rs_2 is %u\n",rs_2);
-		printf("the rs_1 is %u\n",rs_1);
-		printf("the imm2 is %u\n",imm2);
+		//printf("the opcode is %u\n",opcode);
+		//printf("the imm1 is %u\n",imm1);
+		//printf("the funct3 is %u\n",funct3);
+		//printf("the rs_2 is %u\n",rs_2);
+		//printf("the rs_1 is %u\n",rs_1);
+		//printf("the imm2 is %u\n",imm2);
 		
 		instr->instruction |= opcode;		
 		instr->instruction |= (imm1 << 7);
@@ -285,7 +285,7 @@ void parseIType(char *opr, Instruction *instr)
 		instr->instruction |= (rs_1 << (7+5+3+5));		
 		instr->instruction |= (imm2 << (7+5+3+5+5));			
 		
-		printf("got to the function sw");
+		//printf("got to the function sw");
 		
 	}
 }
