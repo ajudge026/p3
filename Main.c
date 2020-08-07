@@ -26,6 +26,10 @@ int main(int argc, const char *argv[])
     //printf("after init core\n");
     /* Task Three - Simulation */
     while (core->tick(core));
+	for(int i =0; i <11; i++)
+	{
+		printf("data_mem[%d] - %ld", i, core->data_mem[i]);
+	}
 
     printf("Simulation is finished.\n");
 

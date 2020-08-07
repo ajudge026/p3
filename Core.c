@@ -102,12 +102,13 @@ bool tickFunc(Core *core)
 	//printf("alu input 1 - %ld\n", alu_in_1);
 	
     ALU(alu_in_0, alu_in_1, ALU_ctrl_signal, &ALU_output, &zero_alu_input); // 0 is offset shuold change to imm val 
-	printf("the instruction  is - %ld\n",instruction );
-	printf("the opcode is - %ld\n",(instruction & 127));
-	if ((instruction & 127) == 51)
+	printf("the instruction  is - %d\n",instruction );
+	printf("the opcode is - %d\n",(instruction & 127));
+	if ((instruction & 127) == 53)
 	{
 		printf("the instruction is  add\n"); //printing adding operands b4 and after
-		printf("the operands were %ld and %ld\n", alu_in_0,alu_in_1); //printing adding operands b4 and after
+		printf("the operands were %ld - %ld and ", read_reg_1, alu_in_0); //printing adding operands b4 and after
+		printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing adding operands b4 and after
 		printf("the result is %ld\n", ALU_output); //printing adding operands b4 and after
 	}
 	
@@ -143,7 +144,7 @@ bool tickFunc(Core *core)
 	//printf("write reg - %ld, write reg val - %ld \n",write_reg, write_reg_val);
     if(signals.RegWrite)
     {
-		if ((instruction & 127) == 53)
+		if ((instruction & 127) == 51)
 		{
 			printf("the reigister being written to is %ld\n", write_reg	);
 			printf("the  value being written  is %ld\n", MUX(signals.MemtoReg, ALU_output, mem_result));
