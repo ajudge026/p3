@@ -80,20 +80,20 @@ bool tickFunc(Core *core)
 	Signal func7 = ((instruction >> (7 + 5 + 3 + 5 + 5)) & 127);
     Signal ALU_ctrl_signal = ALUControlUnit(signals.ALUOp, func7, func3);
 
-    Register reg_1 = (instruction >> (7 + 5 + 3)) & 31;
+    Register read_reg_1 = (instruction >> (7 + 5 + 3)) & 31;
     
-	Register reg_2 = (instruction >> (7 + 5 + 3 + 5)) & 31;
+	Register read_reg_2 = (instruction >> (7 + 5 + 3 + 5)) & 31;
 
     //create signal input to ALU from read data 1 output
     Signal alu_in_0;    
-	alu_in_0 = core->reg_file[reg_1];
+	alu_in_0 = core->reg_file[read_reg_1];
 	printf("the alu mux control is %ld\n",signals.ALUSrc );
-	Signal reg_2_value =core->reg_file[reg_2];
-	Signal reg_1_value =core->reg_file[reg_1];
-	printf("reg1 - %ld, reg1val - %ld\n", reg_1, reg_1_value);
-	printf("reg2 - %ld, reg2val - %ld\n", reg_2, reg_2_value);
+	Signal read_reg_2_value =core->reg_file[read_reg_2];
+	Signal read_reg_1_value =core->reg_file[read_reg_1];
+	printf("reg1 - %ld, reg1val - %ld\n", read_reg_1, read_reg_1_value);
+	printf("reg2 - %ld, reg2val - %ld\n", read_reg_2, read_reg_2_value);
 	
-    Signal alu_in_1 = MUX(signals.ALUSrc,core->reg_file[reg_2],ImmeGen(instruction));
+    Signal alu_in_1 = MUX(signals.ALUSrc,core->reg_file[read_reg_2],ImmeGen(instruction));
     Signal ALU_output;
 	
     Signal zero_alu_input;
@@ -102,7 +102,7 @@ bool tickFunc(Core *core)
     ALU(alu_in_0, alu_in_1, ALU_ctrl_signal, &ALU_output, &zero_alu_input); // 0 is offset shuold change to imm val 
     printf("ALU out: %ld\n", ALU_output);
 
-    Register write_reg = (instruction >> 7) & 31;
+    Register write_reg = (instruction >> 7) & 31;	
 
     //printf("alu output should be destination address - %lu\n", ALU_output);
 	//printf("reg_2_value should be data to write - %lu\n", reg_2_value);
@@ -128,6 +128,8 @@ bool tickFunc(Core *core)
     mem_result= mem_result<< 56 | core->data_mem[ALU_output + 0];
     //printf("mem result - %ld\n", mem_result);
 
+	Signal write_reg_val =  core->reg_file[write_reg];
+	printf("write reg - %ld, write reg val - %ld \n",write_reg, write_reg_val);
     if(signals.RegWrite)
     {
         core->reg_file[write_reg] = MUX(signals.MemtoReg, ALU_output, mem_result);
@@ -148,7 +150,7 @@ bool tickFunc(Core *core)
 	Signal mux_output = MUX((zero_alu_input & signals.Branch), 4, (signed int)shifted_immediate);
     core->PC = Add(core->PC, mux_output);
 	
-    printf(" Program Counter: %ld\n", core->PC);
+    printf(" Program Counter after add: %ld\n", core->PC);
 
 
 	
