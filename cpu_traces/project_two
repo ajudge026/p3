@@ -1,1 +1,3 @@
-sw x20, 0(x30)
+add x21, x0, x0
+add x21, x0, x22
+bne x21, x20, -1
