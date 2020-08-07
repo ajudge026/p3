@@ -27,8 +27,8 @@ void loadInstructions(Instruction_Memory *i_mem, const char *trace)
 
         // Extract operation for R-Type
         char *raw_instr = strtok(line, " ");
-		printf("the pulled instruction is %s\n", raw_instr);
-		printf("the logical check is -  %d\n", strcmp(raw_instr, "sw"));
+		//printf("the pulled instruction is %s\n", raw_instr);
+		//printf("the logical check is -  %d\n", strcmp(raw_instr, "sw"));
         if (strcmp(raw_instr, "add") == 0 ||
             strcmp(raw_instr, "sub") == 0 ||
             strcmp(raw_instr, "sll") == 0 ||
@@ -37,7 +37,7 @@ void loadInstructions(Instruction_Memory *i_mem, const char *trace)
             strcmp(raw_instr, "or")  == 0 ||
             strcmp(raw_instr, "and") == 0)
         {
-		//printf("The type of instruction is: %s\n", raw_instr);
+		////printf("The type of instruction is: %s\n", raw_instr);
             parseRType(raw_instr, &(i_mem->instructions[IMEM_index]));
             i_mem->last = &(i_mem->instructions[IMEM_index]);
         }
@@ -63,7 +63,7 @@ void loadInstructions(Instruction_Memory *i_mem, const char *trace)
 		// Extract operation for S-Type		
 		else if (strcmp(raw_instr, "sw") == 0  )
         {
-			printf("in if statement s-type\n");
+			//printf("in if statement s-type\n");
             parseSType(raw_instr, &(i_mem->instructions[IMEM_index]));
             i_mem->last = &(i_mem->instructions[IMEM_index]);
         }
