@@ -36,12 +36,12 @@ Core *initCore(Instruction_Memory *i_mem)
     // core->reg_file[0] = ...
 
     //set the reg_files for holding the offset
-	 core->reg_file[20] = 0;
+	 core->reg_file[20] = 4;
 	 core->reg_file[21] = 0;
 	 core->reg_file[22] = 0; 
 	 core->reg_file[27] = 1; 	
     core->reg_file[26] = 4; 
-	core->reg_file[30] = 4; 
+	core->reg_file[30] = 0; 
     
     //score->reg_file[25] = 0; // offset
     
@@ -89,9 +89,9 @@ bool tickFunc(Core *core)
     Signal ALU_output;
 	
     Signal zero_alu_input;
-	printf("alu input 0 - %ld\n", alu_in_0);
-	printf("alu input 1 - %ld\n", alu_in_1);
-    ALU(alu_in_0, alu_in_1, ALU_ctrl_signal, &ALU_output, &zero_alu_input);
+	printf("alu input 0 or reg_1 val x(30)- %ld\n", alu_in_0);
+	printf("alu input 1 or reg_2 val x(20) - %ld\n", alu_in_1);
+    ALU(alu_in_0, 0, ALU_ctrl_signal, &ALU_output, &zero_alu_input); // 0 is offset shuold change to imm val 
     //printf("ALU out: %ld\n", ALU_output);
 
     Register write_reg = (instruction >> 7) & 31;
@@ -100,7 +100,9 @@ bool tickFunc(Core *core)
 	printf("alu_in_1 should be data to write - %u\n", alu_in_1);
 	if(signals.MemWrite)
     {
-        core->data_mem[ALU_output] = alu_in_1;
+        printf("the datamem write address is -  %u\n",  ALU_output);
+		core->data_mem[ALU_output] = alu_in_1;
+		printf("the data at the mem address is %u\n",   core->data_mem[ALU_output]);
     }
 	
 	// core outputs of memory 
@@ -195,7 +197,7 @@ void ControlUnit(Signal input,
     // For sd (S-type)
     if (input == 35){
 		printf("sw\n"); 
-        signals->ALUSrc = 1;
+        signals->ALUSrc = 0;
         signals->MemtoReg = 0; 
         signals->RegWrite = 0;
         signals->MemRead = 0;
