@@ -102,7 +102,7 @@ bool tickFunc(Core *core)
 	//printf("alu input 1 - %ld\n", alu_in_1);
 	
     ALU(alu_in_0, alu_in_1, ALU_ctrl_signal, &ALU_output, &zero_alu_input); // 0 is offset shuold change to imm val 
-	if (opcode == 51)
+	if ((instruction & 7) == 51)
 	{
 		printf("the instruction is  add\n"); //printing adding operands b4 and after
 		printf("the operands were %ld and %ld\n", alu_in_0,alu_in_1); //printing adding operands b4 and after
@@ -150,7 +150,7 @@ bool tickFunc(Core *core)
     //printf("Register x11 -  %ld\n", core->reg_file[11]);
 
     Signal shifted_immediate = ShiftLeft1(ImmeGen(input));	
-	if(opcode == 99)
+	if((instruction& 7 )== 99)
 	{
 		printf("the instruction is  %ld\n", ALU_output); //printing adding operands b4 and after
 		printf("the comparing operands were %ld and %ld\n", alu_in_0,alu_in_1); //printing adding operands b4 and after
