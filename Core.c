@@ -57,6 +57,7 @@ Core *initCore(Instruction_Memory *i_mem)
 // FIXME, implement this function
 bool tickFunc(Core *core)
 {
+	printf("==============  new tick =====================");
     // Steps may include
     // (Step 1) Reading instruction from instruction memory
     unsigned instruction = core->instr_mem->instructions[core->PC / 4].instruction;
@@ -87,20 +88,28 @@ bool tickFunc(Core *core)
     //create signal input to ALU from read data 1 output
     Signal alu_in_0;    
 	alu_in_0 = core->reg_file[read_reg_1];
-	printf("the alu mux control is %ld\n",signals.ALUSrc );
+	//printf("the alu mux control is %ld\n",signals.ALUSrc );
 	Signal read_reg_2_value =core->reg_file[read_reg_2];
 	Signal read_reg_1_value =core->reg_file[read_reg_1];
-	printf("reg1 - %ld, reg1val - %ld\n", read_reg_1, read_reg_1_value);
-	printf("reg2 - %ld, reg2val - %ld\n", read_reg_2, read_reg_2_value);
+	//printf("reg1 - %ld, reg1val - %ld\n", read_reg_1, read_reg_1_value);
+	//printf("reg2 - %ld, reg2val - %ld\n", read_reg_2, read_reg_2_value);
 	
     Signal alu_in_1 = MUX(signals.ALUSrc,core->reg_file[read_reg_2],ImmeGen(instruction));
     Signal ALU_output;
 	
     Signal zero_alu_input;
-	printf("alu input 0 -  %ld\n", alu_in_0);
-	printf("alu input 1 - %ld\n", alu_in_1);
+	//printf("alu input 0 -  %ld\n", alu_in_0);
+	//printf("alu input 1 - %ld\n", alu_in_1);
+	
     ALU(alu_in_0, alu_in_1, ALU_ctrl_signal, &ALU_output, &zero_alu_input); // 0 is offset shuold change to imm val 
-    printf("ALU out: %ld\n", ALU_output);
+	if (opcode == 51)
+	{
+		printf("the instruction is  add\n"); //printing adding operands b4 and after
+		printf("the operands were %ld and %ld\n", alu_in_0,alu_in_1); //printing adding operands b4 and after
+		printf("the result is %ld\n", ALU_output); //printing adding operands b4 and after
+	}
+	
+    //printf("ALU out: %ld\n", ALU_output);
 
     Register write_reg = (instruction >> 7) & 31;	
 
@@ -110,7 +119,7 @@ bool tickFunc(Core *core)
     {
         //printf("the datamem write address is -  %lu\n",  ALU_output);
 		core->data_mem[ALU_output] = read_reg_2;
-		printf("the data at the mem address is %u\n",   core->data_mem[ALU_output]);
+		//printf("the data at the mem address is %u\n",   core->data_mem[ALU_output]);
     }
 	
 	// core outputs of memory 
@@ -129,7 +138,7 @@ bool tickFunc(Core *core)
     //printf("mem result - %ld\n", mem_result);
 
 	Signal write_reg_val =  core->reg_file[write_reg];
-	printf("write reg - %ld, write reg val - %ld \n",write_reg, write_reg_val);
+	//printf("write reg - %ld, write reg val - %ld \n",write_reg, write_reg_val);
     if(signals.RegWrite)
     {
         core->reg_file[write_reg] = MUX(signals.MemtoReg, ALU_output, mem_result);
@@ -141,6 +150,12 @@ bool tickFunc(Core *core)
     //printf("Register x11 -  %ld\n", core->reg_file[11]);
 
     Signal shifted_immediate = ShiftLeft1(ImmeGen(input));	
+	if(opcode == 99)
+	{
+		printf("the instruction is  %ld\n", ALU_output); //printing adding operands b4 and after
+		printf("the comparing operands were %ld and %ld\n", alu_in_0,alu_in_1); //printing adding operands b4 and after
+		printf("the shifted imm is  %ld \n", shifted_immediate); //printing adding operands b4 and after
+	}
 	//printf("the mux control signal is - %d\n", (zero_alu_input && signals.Branch));
 	//printf("the zero_alu_input is - %ld\n", zero_alu_input );
 	//printf("the alu control is - %ld\n",ALU_ctrl_signal  );
@@ -160,7 +175,7 @@ bool tickFunc(Core *core)
     // Are we reaching the final instruction?
     if (core->PC > core->instr_mem->last->addr)
     {
-		printf("the datamem stored is - %d ", core->data_mem[0]);
+		//printf("the datamem stored is - %d ", core->data_mem[0]);
         return false;
     }
     return true;
