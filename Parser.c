@@ -258,16 +258,15 @@ void parseIType(char *opr, Instruction *instr)
     instr->instruction = 0;
     unsigned opcode = 0;
     unsigned funct3 = 0;   	
-	printf("s-type");	
+	printf("s-type inside of funtcion\n");	
     if (strcmp(opr, "sw") == 0)
     {
-       /*  opcode = 35;
+         opcode = 35;
         funct3 = 2;  
 		int imm1, imm2 = 0;
 		
 		char *reg = strtok(NULL, ", ");
-		unsigned rs_1 = regIndex(reg);
-		reg = strtok(NULL, ", ");
+		unsigned rs_1 = regIndex(reg);		
 		char *offset = strtok(NULL, "(");
 		reg = strtok(NULL, ")");
 		reg[strlen(reg)-1] = '\0';	
@@ -279,7 +278,7 @@ void parseIType(char *opr, Instruction *instr)
 		instr->instruction |= (rs_1 << (7+5+3));
 		instr->instruction |= (rs_2 << (7+5+3+5));		
 		instr->instruction |= (imm2 << (7+5+3+5+5));			
-		 */
+		
 		printf("got to the function sw");
 		
 	}
