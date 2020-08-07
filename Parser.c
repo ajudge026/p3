@@ -275,7 +275,7 @@ void parseIType(char *opr, Instruction *instr)
 		printf("the imm1 is %u\n",imm1);
 		printf("the funct3 is %u\n",funct3);
 		printf("the rs_2 is %u\n",rs_2);
-		printf("the rs_1 is %u\n",opcode);
+		printf("the rs_1 is %u\n",rs_1);
 		printf("the imm2 is %u\n",imm2);
 		
 		instr->instruction |= opcode;		
