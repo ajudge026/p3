@@ -27,6 +27,8 @@ void loadInstructions(Instruction_Memory *i_mem, const char *trace)
 
         // Extract operation for R-Type
         char *raw_instr = strtok(line, " ");
+		printf("the pulled instruction is %s\n", raw_instr);
+		printf("the logical check is -  %d\n", strcmp(raw_instr, "sw"));
         if (strcmp(raw_instr, "add") == 0 ||
             strcmp(raw_instr, "sub") == 0 ||
             strcmp(raw_instr, "sll") == 0 ||
@@ -41,7 +43,7 @@ void loadInstructions(Instruction_Memory *i_mem, const char *trace)
         }
 		
 		// Extract operation for I-Type		
-	else if (strcmp(raw_instr, "addi") == 0 ||
+		else if (strcmp(raw_instr, "addi") == 0 ||
             strcmp(raw_instr, "slli") == 0 ||
              strcmp(raw_instr, "ld") == 0 )
         {
@@ -52,15 +54,16 @@ void loadInstructions(Instruction_Memory *i_mem, const char *trace)
 		
 		
 		// Extract operation for SB-Type		
-     else if (strcmp(raw_instr, "bne") == 0  )
+		else if (strcmp(raw_instr, "bne") == 0  )
         {
             parseSBType(raw_instr, &(i_mem->instructions[IMEM_index]));
             i_mem->last = &(i_mem->instructions[IMEM_index]);
         }
 			
 		// Extract operation for S-Type		
-     else if (strcmp(raw_instr, "sw") == 0  )
+		else if (strcmp(raw_instr, "sw") == 0  )
         {
+			printf("in if statement s-type\n");
             parseSType(raw_instr, &(i_mem->instructions[IMEM_index]));
             i_mem->last = &(i_mem->instructions[IMEM_index]);
         }
@@ -241,14 +244,7 @@ void parseIType(char *opr, Instruction *instr)
 		instr->instruction |= (imm3 << (7+1+4+3+5+5));	
 		instr->instruction |= (neg << (7+1+4+3+5+5+6));			
 		
-		//printf("opcode -%d\n",opcode);
-		//printf("imm1 -%d\n",imm1);
-		//printf("imm2 -%d\n",imm2);
-		//printf("funct3-%d\n",funct3);
-		//printf("rs_1 -%d\n",rs_1);
-		//printf("rs_2-%d\n",rs_2);
-		//printf("imm3-%d\n",imm3);
-		//printf("neg -%d\n",neg);
+		
 		
 	}
 }
@@ -261,10 +257,11 @@ void parseIType(char *opr, Instruction *instr)
 {
     instr->instruction = 0;
     unsigned opcode = 0;
-    unsigned funct3 = 0;    
+    unsigned funct3 = 0;   	
+	printf("s-type");	
     if (strcmp(opr, "sw") == 0)
     {
-        opcode = 35;
+       /*  opcode = 35;
         funct3 = 2;  
 		int imm1, imm2 = 0;
 		
@@ -274,11 +271,7 @@ void parseIType(char *opr, Instruction *instr)
 		char *offset = strtok(NULL, "(");
 		reg = strtok(NULL, ")");
 		reg[strlen(reg)-1] = '\0';	
-		unsigned rs_2 = regIndex(reg);		
-		
-					
-		
-		
+		unsigned rs_2 = regIndex(reg);	
 		
 		instr->instruction |= opcode;		
 		instr->instruction |= (imm1 << 7);
@@ -286,8 +279,8 @@ void parseIType(char *opr, Instruction *instr)
 		instr->instruction |= (rs_1 << (7+5+3));
 		instr->instruction |= (rs_2 << (7+5+3+5));		
 		instr->instruction |= (imm2 << (7+5+3+5+5));			
-		
-	
+		 */
+		printf("got to the function sw");
 		
 	}
 }
