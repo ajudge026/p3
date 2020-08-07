@@ -85,12 +85,14 @@ bool tickFunc(Core *core)
 	Register reg_2 = (instruction >> (7 + 5 + 3 + 5)) & 31;
 
     //create signal input to ALU from read data 1 output
-    Signal alu_in_0;
-    //printf("reg1 - %ld\n", reg_1);
-	//printf("reg2 - %ld\n", reg_2);
+    Signal alu_in_0;    
 	alu_in_0 = core->reg_file[reg_1];
 	printf("the alu mux control is %ld\n",signals.ALUSrc );
 	Signal reg_2_value =core->reg_file[reg_2];
+	Signal reg_1_value =core->reg_file[reg_1];
+	printf("reg1 - %ld, reg1val - %ld\n", reg_1, reg_1_value);
+	printf("reg2 - %ld, reg2val - %ld\n", reg_2, reg_2_value);
+	
     Signal alu_in_1 = MUX(signals.ALUSrc,core->reg_file[reg_2],ImmeGen(instruction));
     Signal ALU_output;
 	
