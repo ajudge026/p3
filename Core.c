@@ -36,12 +36,17 @@ Core *initCore(Instruction_Memory *i_mem)
     // core->reg_file[0] = ...
 
     //set the reg_files for holding the offset
-	 core->reg_file[20] = 4;
+	 /* core->reg_file[20] = 4;
 	 core->reg_file[21] = 0;
 	 core->reg_file[22] = 0; 
 	 core->reg_file[27] = 1; 	
     core->reg_file[26] = 4; 
-	core->reg_file[30] = 0; 
+	core->reg_file[30] = 0;  */
+	
+	core->reg_file[20] = 4;
+	 core->reg_file[22] = 1;
+	 core->reg_file[0] = 0; 
+	 
     
     //score->reg_file[25] = 0; // offset
     
