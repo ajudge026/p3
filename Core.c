@@ -146,7 +146,7 @@ bool tickFunc(Core *core)
     // Are we reaching the final instruction?
     if (core->PC > core->instr_mem->last->addr)
     {
-		printf("the datamem stored is - %ld ", core->data_mem[0]);
+		printf("the datamem stored is - %d ", core->data_mem[0]);
         return false;
     }
     return true;

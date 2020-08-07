@@ -263,20 +263,26 @@ void parseIType(char *opr, Instruction *instr)
     {
          opcode = 35;
         funct3 = 2;  
-		int imm1, imm2 = 0;
+		unsigned imm1 = 0;
+		unsigned imm2 = 0;
 		
 		char *reg = strtok(NULL, ", ");
 		unsigned rs_1 = regIndex(reg);		
 		char *offset = strtok(NULL, "(");
-		reg = strtok(NULL, ")");
-		reg[strlen(reg)-1] = '\0';	
+		reg = strtok(NULL, ")");		
 		unsigned rs_2 = regIndex(reg);	
+		printf("the opcode is %u\n",opcode);
+		printf("the imm1 is %u\n",imm1);
+		printf("the funct3 is %u\n",funct3);
+		printf("the rs_2 is %u\n",rs_2);
+		printf("the rs_1 is %u\n",opcode);
+		printf("the imm2 is %u\n",imm2);
 		
 		instr->instruction |= opcode;		
 		instr->instruction |= (imm1 << 7);
 		instr->instruction |= (funct3 << (7 + 5));		
-		instr->instruction |= (rs_1 << (7+5+3));
-		instr->instruction |= (rs_2 << (7+5+3+5));		
+		instr->instruction |= (rs_2 << (7+5+3));
+		instr->instruction |= (rs_1 << (7+5+3+5));		
 		instr->instruction |= (imm2 << (7+5+3+5+5));			
 		
 		printf("got to the function sw");
