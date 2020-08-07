@@ -97,12 +97,12 @@ bool tickFunc(Core *core)
     Register write_reg = (instruction >> 7) & 31;
 
     printf("alu output should be destination address - %u\n", ALU_output);
-	printf("alu_in_1 should be data to write - %u\n", alu_in_1);
+	printf("alu_in_1 should be data to write - %lu\n", alu_in_1);
 	if(signals.MemWrite)
     {
-        printf("the datamem write address is -  %u\n",  ALU_output);
+        printf("the datamem write address is -  %lu\n",  ALU_output);
 		core->data_mem[ALU_output] = alu_in_1;
-		printf("the data at the mem address is %u\n",   core->data_mem[ALU_output]);
+		printf("the data at the mem address is %lu\n",   core->data_mem[ALU_output]);
     }
 	
 	// core outputs of memory 
