@@ -89,24 +89,25 @@ bool tickFunc(Core *core)
     //printf("reg1 - %ld\n", reg_1);
 	//printf("reg2 - %ld\n", reg_2);
 	alu_in_0 = core->reg_file[reg_1];
-
+	printf("the alu mux control is %ld\n",signals.ALUSrc );
+	Signal reg_2_value =core->reg_file[reg_2];
     Signal alu_in_1 = MUX(signals.ALUSrc,core->reg_file[reg_2],ImmeGen(instruction));
     Signal ALU_output;
 	
     Signal zero_alu_input;
 	//printf("alu input 0 or reg_1 val x(30)- %ld\n", alu_in_0);
 	////printf("alu input 1 or reg_2 val x(20) - %ld\n", alu_in_1);
-    ALU(alu_in_0, 0, ALU_ctrl_signal, &ALU_output, &zero_alu_input); // 0 is offset shuold change to imm val 
+    ALU(alu_in_0, alu_in_1, ALU_ctrl_signal, &ALU_output, &zero_alu_input); // 0 is offset shuold change to imm val 
     //////printf("ALU out: %ld\n", ALU_output);
 
     Register write_reg = (instruction >> 7) & 31;
 
     //printf("alu output should be destination address - %lu\n", ALU_output);
-	//printf("alu_in_1 should be data to write - %lu\n", alu_in_1);
+	//printf("reg_2_value should be data to write - %lu\n", reg_2_value);
 	if(signals.MemWrite)
     {
         //printf("the datamem write address is -  %lu\n",  ALU_output);
-		core->data_mem[ALU_output] = alu_in_1;
+		core->data_mem[ALU_output] = reg_2_value;
 		printf("the data at the mem address is %u\n",   core->data_mem[ALU_output]);
     }
 	
