@@ -64,7 +64,7 @@ bool tickFunc(Core *core)
     Signal input = (instruction & 127);
 	// prints opcode in decimal
 	
-    printf("Opcode: %ld\n", input); 
+    //printf("Opcode: %ld\n", input); 
 	
 	//holds signals from the controller
     ControlSignals signals;
@@ -81,8 +81,8 @@ bool tickFunc(Core *core)
 
     //create signal input to ALU from read data 1 output
     Signal alu_in_0;
-    printf("reg1 - %ld\n", reg_1);
-	printf("reg2 - %ld\n", reg_2);
+    //printf("reg1 - %ld\n", reg_1);
+	//printf("reg2 - %ld\n", reg_2);
 	alu_in_0 = core->reg_file[reg_1];
 
     Signal alu_in_1 = MUX(signals.ALUSrc,core->reg_file[reg_2],ImmeGen(instruction));
@@ -96,13 +96,13 @@ bool tickFunc(Core *core)
 
     Register write_reg = (instruction >> 7) & 31;
 
-    printf("alu output should be destination address - %u\n", ALU_output);
+    printf("alu output should be destination address - %lu\n", ALU_output);
 	printf("alu_in_1 should be data to write - %lu\n", alu_in_1);
 	if(signals.MemWrite)
     {
         printf("the datamem write address is -  %lu\n",  ALU_output);
 		core->data_mem[ALU_output] = alu_in_1;
-		printf("the data at the mem address is %lu\n",   core->data_mem[ALU_output]);
+		printf("the data at the mem address is %u\n",   core->data_mem[ALU_output]);
     }
 	
 	// core outputs of memory 
@@ -131,12 +131,12 @@ bool tickFunc(Core *core)
     //printf("Register x11 -  %ld\n", core->reg_file[11]);
 
     Signal shifted_immediate = ShiftLeft1(ImmeGen(input));	
-	printf("the mux control signal is - %d\n", (zero_alu_input && signals.Branch));
-	printf("the zero_alu_input is - %ld\n", zero_alu_input );
-	printf("the alu control is - %ld\n",ALU_ctrl_signal  );
-	printf("signals.Branch is - %ld\n",  signals.Branch);
-	printf("the non shifted immediate is - %ld\n", ImmeGen(input));
-	printf("the shifted immediate is  - %ld\n", shifted_immediate);
+	//printf("the mux control signal is - %d\n", (zero_alu_input && signals.Branch));
+	//printf("the zero_alu_input is - %ld\n", zero_alu_input );
+	//printf("the alu control is - %ld\n",ALU_ctrl_signal  );
+	//printf("signals.Branch is - %ld\n",  signals.Branch);
+	//printf("the non shifted immediate is - %ld\n", ImmeGen(input));
+	//printf("the shifted immediate is  - %ld\n", shifted_immediate);
 	Signal mux_output = MUX((zero_alu_input & signals.Branch), 4, (signed int)shifted_immediate);
     core->PC = Add(core->PC, mux_output);
 	
@@ -162,7 +162,7 @@ void ControlUnit(Signal input,
 {
     // For R-type
     if (input == 51) {
-		printf("RType\n"); 
+		//printf("RType\n"); 
         signals->ALUSrc = 0;
         signals->MemtoReg = 0;
         signals->RegWrite = 1;
@@ -173,7 +173,7 @@ void ControlUnit(Signal input,
     }
     // For ld 
     if (input == 3) { //opcode
-	    printf("ld\n"); 
+	    //printf("ld\n"); 
         signals->ALUSrc = 1;
         signals->MemtoReg = 1;
         signals->RegWrite = 1;
@@ -184,7 +184,7 @@ void ControlUnit(Signal input,
     }
     // For addi , slli 
     if (input == 19 ){
-		printf("slli\n"); 		
+		//printf("slli\n"); 		
         signals->ALUSrc = 1;
         signals->MemtoReg = 1;
         signals->RegWrite = 1;
@@ -196,7 +196,7 @@ void ControlUnit(Signal input,
 	
     // For sd (S-type)
     if (input == 35){
-		printf("sw\n"); 
+		//printf("sw\n"); 
         signals->ALUSrc = 0;
         signals->MemtoReg = 0; 
         signals->RegWrite = 0;
@@ -207,7 +207,7 @@ void ControlUnit(Signal input,
     }
     // For beq (SB-type)
     if (input == 99){ //opcode
-        printf("bne\n"); 
+        //printf("bne\n"); 
 		signals->ALUSrc = 0;		
         signals->MemtoReg = 0; 
         signals->RegWrite = 0;
@@ -336,7 +336,7 @@ void ALU(Signal input_0,
     if (ALU_ctrl_signal == 6)
     {
         *ALU_result = (input_0 - input_1);
-		printf("ALU RESULT - %ld", (input_0 - input_1));
+		//printf("ALU RESULT - %ld", (input_0 - input_1));
         if (*ALU_result != 0) { *zero = 1; } else { *zero = 0; }
     }
     // For shift left
