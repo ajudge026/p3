@@ -89,18 +89,18 @@ bool tickFunc(Core *core)
     Signal ALU_output;
 	
     Signal zero_alu_input;
-	printf("alu input 0 or reg_1 val x(30)- %ld\n", alu_in_0);
-	printf("alu input 1 or reg_2 val x(20) - %ld\n", alu_in_1);
+	//printf("alu input 0 or reg_1 val x(30)- %ld\n", alu_in_0);
+	////printf("alu input 1 or reg_2 val x(20) - %ld\n", alu_in_1);
     ALU(alu_in_0, 0, ALU_ctrl_signal, &ALU_output, &zero_alu_input); // 0 is offset shuold change to imm val 
-    //printf("ALU out: %ld\n", ALU_output);
+    //////printf("ALU out: %ld\n", ALU_output);
 
     Register write_reg = (instruction >> 7) & 31;
 
-    printf("alu output should be destination address - %lu\n", ALU_output);
-	printf("alu_in_1 should be data to write - %lu\n", alu_in_1);
+    //printf("alu output should be destination address - %lu\n", ALU_output);
+	//printf("alu_in_1 should be data to write - %lu\n", alu_in_1);
 	if(signals.MemWrite)
     {
-        printf("the datamem write address is -  %lu\n",  ALU_output);
+        //printf("the datamem write address is -  %lu\n",  ALU_output);
 		core->data_mem[ALU_output] = alu_in_1;
 		printf("the data at the mem address is %u\n",   core->data_mem[ALU_output]);
     }
