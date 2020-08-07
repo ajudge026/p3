@@ -94,7 +94,7 @@ bool tickFunc(Core *core)
 	//printf("reg1 - %ld, reg1val - %ld\n", read_reg_1, read_reg_1_value);
 	//printf("reg2 - %ld, reg2val - %ld\n", read_reg_2, read_reg_2_value);
 	
-    Signal alu_in_1 = MUX(signals.ALUSrc,core->reg_file[read_reg_2],ImmeGen(instruction));
+    Signal alu_in_1 = MUX(signals.ALUSrc,core->reg_file[read_reg_2],ImmeGen( input,instruction));
     Signal ALU_output;
 	
     Signal zero_alu_input;
@@ -120,7 +120,7 @@ bool tickFunc(Core *core)
 	//printf("reg_2_value should be data to write - %lu\n", reg_2_value);
 	if(signals.MemWrite)
     {
-        //printf("the datamem write address is -  %lu\n",  ALU_output);
+        printf("the datamem write address is -  %lu\n",  ALU_output);
 		core->data_mem[ALU_output] = read_reg_2;
 		//printf("the data at the mem address is %u\n",   core->data_mem[ALU_output]);
     }
@@ -157,7 +157,7 @@ bool tickFunc(Core *core)
     //printf("Register x9 -  %ld\n", core->reg_file[9]); 
     //printf("Register x11 -  %ld\n", core->reg_file[11]);
 
-    Signal shifted_immediate = ShiftLeft1(ImmeGen(input));	
+    Signal shifted_immediate = ShiftLeft1(ImmeGen(input, instruction));	
 	if((instruction& 127 )== 99)
 	{
 		printf("the instruction is  %ld\n", ALU_output); //printing adding operands b4 and after
@@ -168,7 +168,7 @@ bool tickFunc(Core *core)
 	//printf("the zero_alu_input is - %ld\n", zero_alu_input );
 	//printf("the alu control is - %ld\n",ALU_ctrl_signal  );
 	//printf("signals.Branch is - %ld\n",  signals.Branch);
-	//printf("the non shifted immediate is - %ld\n", ImmeGen(input));
+	//printf("the non shifted immediate is - %ld\n", ImmeGen(Signal input, Signal instruction));
 	//printf("the shifted immediate is  - %ld\n", shifted_immediate);
 	Signal mux_output = MUX((zero_alu_input & signals.Branch), 4, (signed int)shifted_immediate);
     core->PC = Add(core->PC, mux_output);
@@ -305,7 +305,7 @@ Signal ALUControlUnit(Signal ALUOp,
 }
 
 // FIXME (3). Imme. Generator
-Signal ImmeGen(Signal input)
+Signal ImmeGen(Signal input, Signal instruction)
 {
     signed int immediate = 0;
 
@@ -327,7 +327,8 @@ Signal ImmeGen(Signal input)
     //bne
     if (input == 99)    {
         //  111111111110;
-        immediate = -1; //<------------------------ fix this 
+        immediate = (inst >>31) + (instruction & 255) + ((instruction>>25) & 1008) + ((instruction >> 8));		//immediate = -4;
+		printf("unshifted imm - %d\n", immediate);
     }
 
     return immediate;
@@ -399,7 +400,7 @@ Signal Add(Signal input_0,
 // (6). ShiftLeft
 Signal ShiftLeft1(Signal input)
 {
-    return input << 2; //<--------------------------------------------------- why? 
+    return input << 1; //<--------------------------------------------------- why? 
 }
 
 // regwrite 
