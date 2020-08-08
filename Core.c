@@ -139,6 +139,10 @@ bool tickFunc(Core *core)
 	}
 	if ((instruction & 127) == 51 && (func3 == 1 ))
 	{
+		if (read_reg_1 == 26)
+		{
+			pritnf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<the value of the matrix left shifted  by i is - %ld\n",ALU_output );
+		}
 		//printf("the instruction is  sll\n"); //printing sll  operands b4 and after
 		//printf("the operands were %ld - %ld and ", read_reg_1, alu_in_0); //printing sll operands b4 and after
 		//printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing sll  operands b4 and after
