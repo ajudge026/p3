@@ -25,7 +25,7 @@ Core *initCore(Instruction_Memory *i_mem)
 	
 	for (int i = 0; i <(16);i++)
 	{
-		core->data_mem[i*8] = i;
+		core->data_mem[i] = i;
 		//printf("data_mem[%d] = %d\n", i, i);
 	}
 	
@@ -163,11 +163,14 @@ bool tickFunc(Core *core)
 	//printf("write reg - %ld, write reg val - %ld \n",write_reg, write_reg_val);
     if(signals.RegWrite)
     {
-		if ((instruction & 127) == 51)
+		/*if ((instruction & 127) == 51)
 		{
 			printf("the reigister being written to is %ld\n", write_reg	);
 			printf("the  value being written  is %ld\n", MUX(signals.MemtoReg, ALU_output, mem_result));
 		}
+		*/
+		printf("the reigister being written to is %ld\n", write_reg	);
+			printf("the  value being written  is %ld\n", MUX(signals.MemtoReg, ALU_output, mem_result));
         core->reg_file[write_reg] = MUX(signals.MemtoReg, ALU_output, mem_result);
     }
 
