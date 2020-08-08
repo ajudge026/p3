@@ -91,6 +91,8 @@ bool tickFunc(Core *core)
     Register read_reg_1 = (instruction >> (7 + 5 + 3)) & 31;
     
 	Register read_reg_2 = (instruction >> (7 + 5 + 3 + 5)) & 31;
+	
+	Register write_reg = (instruction >> 7) & 31;
 
     //create signal input to ALU from read data 1 output
     Signal alu_in_0;    
@@ -111,7 +113,8 @@ bool tickFunc(Core *core)
     ALU(alu_in_0, alu_in_1, ALU_ctrl_signal, &ALU_output, &zero_alu_input); // 0 is offset shuold change to imm val 
 	if(signals.MemRead == 1)
 	{
-		core->reg_file[read_reg_2] = core->data_mem[ALU_output];
+		
+		core->reg_file[write_reg] = core->data_mem[ALU_output];
 		printf("the store register index - %ld\n",read_reg_2 );
 		printf("the read mem index - %ld\n",ALU_output);
 	}
