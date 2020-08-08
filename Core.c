@@ -153,7 +153,7 @@ bool tickFunc(Core *core)
 	
     //printf("ALU out: %ld\n", ALU_output);
 
-    Register write_reg = (instruction >> 7) & 31;	
+    //Register write_reg = (instruction >> 7) & 31;	
 
     //printf("alu output should be destination address - %lu\n", ALU_output);
 	//printf("reg_2_value should be data to write - %lu\n", reg_2_value);
