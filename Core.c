@@ -23,12 +23,13 @@ Core *initCore(Instruction_Memory *i_mem)
 		//printf("data_mem[%d] = %d\n", i, i);
 	}
 	
-	for (int i = 0; i <(16);i++)
+	/*for (int i = 0; i <(16);i++)
 	{
 		core->data_mem[i*8] = i;
 		//printf("data_mem[%d] = %d\n", i, i);
 	}
-	
+	*/
+
 
 	
 
@@ -111,6 +112,13 @@ bool tickFunc(Core *core)
 		printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing adding operands b4 and after
 		printf("the result is %ld\n", ALU_output); //printing adding operands b4 and after
 	}
+	if ((instruction & 127) == 35)
+	{
+		printf("the instruction is  store (sw)\n"); //printing adding operands b4 and after
+		printf("the operands were %ld - %ld and ", read_reg_1, alu_in_0); //printing adding operands b4 and after
+		printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing adding operands b4 and after
+		printf("the result is %ld\n", ALU_output); //printing adding operands b4 and after
+	}
 	
     //printf("ALU out: %ld\n", ALU_output);
 
@@ -121,7 +129,8 @@ bool tickFunc(Core *core)
 	if(signals.MemWrite)
     {
         printf("the datamem write address is -  %lu\n",  ALU_output);
-		core->data_mem[ALU_output] = read_reg_2;
+		printf("the data being written is -  %lu\n",  read_reg_2_value);
+		core->data_mem[ALU_output] = read_reg_2_value;
 		//printf("the data at the mem address is %u\n",   core->data_mem[ALU_output]);
     }
 	
