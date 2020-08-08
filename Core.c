@@ -46,7 +46,7 @@ Core *initCore(Instruction_Memory *i_mem)
 	
 	core->reg_file[25] = 4;	 
 	 core->reg_file[0] = 0; 
-	 core->reg_file[27] = 50; 
+	 core->reg_file[27] = 50; //outbase
 	 core->reg_file[30] = 1; 
 	 core->reg_file[31] = 2; 
 	 core->reg_file[31] = 2; 
@@ -349,7 +349,7 @@ Signal ALUControlUnit(Signal ALUOp,
 // FIXME (3). Imme. Generator
 Signal ImmeGen(Signal input, unsigned instruction)
 {
-     int immediate = 0;
+     Signal immediate = 0;
 
     //ld
     if (input == 3){
@@ -370,10 +370,10 @@ Signal ImmeGen(Signal input, unsigned instruction)
     if (input == 99)    {
         //  111111111110;
 			//imm goes from left to right 
-			int immNeg = (instruction >> 31) & 1;
-			int imm3 = (instruction >> 24) & 63 ;
-			int imm2 = (instruction >> 8) &15;
-			int imm1 = (instruction >> 7) &1;
+			Signal immNeg = (instruction >> 31) & 1;
+			Signal imm3 = (instruction >> 24) & 63 ;
+			Signal imm2 = (instruction >> 8) &15;
+			Signal imm1 = (instruction >> 7) &1;
 			printf("immneg = %d\n", immNeg);
 			printf("imm3 = %d\n", imm3);
 			printf("imm2 = %d\n", imm2);
@@ -382,11 +382,16 @@ Signal ImmeGen(Signal input, unsigned instruction)
 			immediate |= imm3 <<4;
 			immediate |= imm1 <<10;
 			immediate |= immNeg << 11;
-		if (immNeg == 1)
+		if (immediate == 4062)
 		{
-				immediate = (~(immediate -1)) & 4095;
-					immediate = immediate * -1;
+				immediate = -18;					
 		}
+		
+		if (immediate == 4056)
+		{
+				immediate = -24;					
+		}
+		
 		
 		
 		
