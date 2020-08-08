@@ -131,6 +131,13 @@ bool tickFunc(Core *core)
 		//printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing sll  operands b4 and after
 		//printf("the result is %ld\n", ALU_output); //printing sll  operands b4 and after
 	}
+	if ((instruction & 127) == 99 )
+	{
+		printf("the instruction is  bne\n"); //printing sll  operands b4 and after
+		printf("============================== bne =====================the operands were %ld - %ld and ", alu_in_1, alu_in_0); //printing sll operands b4 and after
+		//printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing sll  operands b4 and after
+		//printf("the result is %ld\n", ALU_output); //printing sll  operands b4 and after
+	}
 	
     //printf("ALU out: %ld\n", ALU_output);
 
