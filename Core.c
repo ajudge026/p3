@@ -79,6 +79,8 @@ bool tickFunc(Core *core)
 	//holds signals from the controller
     ControlSignals signals;
     ControlUnit(instruction, input, &signals);
+	//read the memory 
+	
 
     Signal func3 =( (instruction >> (7 + 5)) & 7);
     //printf("func3 - %ld\n", func3);
@@ -107,9 +109,14 @@ bool tickFunc(Core *core)
 	//printf("alu input 1 - %ld\n", alu_in_1);
 	
     ALU(alu_in_0, alu_in_1, ALU_ctrl_signal, &ALU_output, &zero_alu_input); // 0 is offset shuold change to imm val 
+	if(signals.MemRead == 1)
+	{
+		core->reg_file[read_reg_2_value] = core->data_mem[ALU_output];
+	}
 	//printf("the alu control signa; is - %ld\n",ALU_ctrl_signal );
 	//printf("the instruction  is - %d\n",instruction );
 	//printf("the opcode is - %d\n",(instruction & 127));
+	
 	if ((instruction & 127) == 51 && (func3 == 0 ))
 	{
 		//printf("the instruction is  add\n"); //printing adding operands b4 and after
