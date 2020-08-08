@@ -129,6 +129,11 @@ bool tickFunc(Core *core)
 		//printf("the operands were %ld - %ld and ", read_reg_1, alu_in_0); //printing adding operands b4 and after
 		//printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing adding operands b4 and after
 		//printf("the result is %ld\n", ALU_output); //printing adding operands b4 and after
+		if(read_reg_1 == 32 && read_reg_2 == 26)
+		{
+			
+			printf("++++++++++++++++++++++++++++++++++++++++++ the value after adding to x32 is - %ld\n",ALU_output );
+		}
 	}
 	if ((instruction & 127) == 35)
 	{
@@ -141,7 +146,7 @@ bool tickFunc(Core *core)
 	{
 		if (read_reg_1 == 26)
 		{
-			pritnf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<the value of the matrix left shifted  by i is - %ld\n",ALU_output );
+			printf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<the value of the matrix left shifted  by i is - %ld\n",ALU_output );
 		}
 		//printf("the instruction is  sll\n"); //printing sll  operands b4 and after
 		//printf("the operands were %ld - %ld and ", read_reg_1, alu_in_0); //printing sll operands b4 and after
