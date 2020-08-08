@@ -129,11 +129,11 @@ bool tickFunc(Core *core)
 		//printf("the operands were %ld - %ld and ", read_reg_1, alu_in_0); //printing adding operands b4 and after
 		//printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing adding operands b4 and after
 		//printf("the result is %ld\n", ALU_output); //printing adding operands b4 and after
-		if(read_reg_1 == 32 && read_reg_2 == 26)
-		{
+		/*if(read_reg_1 == 32 && read_reg_2 == 26)
+		{*/
 			
-			printf("++++++++++++++++++++++++++++++++++++++++++ the value after adding to x32 is - %ld\n",ALU_output );
-		}
+			printf("++++++++++++++++++++++++++++++++++++++++++ the value of x%ld after adding to  %ld and %ld is - %ld\n", write_reg, read_reg_1_value, read_reg_2_value, ALU_output );
+		//}
 	}
 	if ((instruction & 127) == 35)
 	{
