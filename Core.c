@@ -81,6 +81,7 @@ bool tickFunc(Core *core)
     Signal func3 =( (instruction >> (7 + 5)) & 7);
     printf("func3 - %ld\n", func3);
 	Signal func7 = ((instruction >> (7 + 5 + 3 + 5 + 5)) & 127);
+	printf("func7 in tickfunction - %ld\n", func7);
     Signal ALU_ctrl_signal = ALUControlUnit(signals.ALUOp, func7, func3);
 
     Register read_reg_1 = (instruction >> (7 + 5 + 3)) & 31;

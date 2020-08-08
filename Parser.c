@@ -118,6 +118,15 @@ void parseRType(char *opr, Instruction *instr)
     instr->instruction |= (rs_1 << (7 + 5 + 3));
     instr->instruction |= (rs_2 << (7 + 5 + 3 + 5));
     instr->instruction |= (funct7 << (7 + 5 + 3 + 5 + 5));
+	printf("============= in parser ===============");
+	printf("opcode - %d\n", opcode );
+	printf("rd - %d\n", rd);
+	printf("funct3- %d\n", funct3 );
+	printf("opcode - %d\n", opcode  );
+	printf("rs_1 - %d\n", rs_1 );
+	printf("rs_2- %d\n", rs_2);
+	printf("funct7- %d\n", funct7);
+		
 	printf("in parser the instruction is - %d\n", (instr->instruction));
 }
 
