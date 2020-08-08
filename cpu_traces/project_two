@@ -1,2 +1,13 @@
-sll x20, x20, x22
-add x20, x20, x22
+add x21, x0, x0 
+add x23, x0, x0 
+slli x24, x21, 2
+add x24, x24, x23
+ld x26, 0(x24) 
+sll x26, x26,  
+sll x29, x29, x21 
+add x28, x27, x21
+sw x26, 0(x28)
+add x23, x23, x30 
+bne x23, x25, -16
+add x21, x21, x30 
+bne x21, x25, -22
