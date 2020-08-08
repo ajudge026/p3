@@ -44,10 +44,10 @@ Core *initCore(Instruction_Memory *i_mem)
     core->reg_file[26] = 4; 
 	core->reg_file[30] = 0;  */
 	
-	core->reg_file[20] = 4;
-	 core->reg_file[22] = 1;
+	core->reg_file[25] = 4;	 
 	 core->reg_file[0] = 0; 
 	 core->reg_file[27] = 50; 
+	 core->reg_file[30] = 1; 
 	 
     
     //score->reg_file[25] = 0; // offset
