@@ -390,14 +390,18 @@ Signal ImmeGen(Signal input, unsigned instruction)
 			immediate |= imm3 <<4;
 			immediate |= imm1 <<10;
 			immediate |= immNeg << 11;
-		if (immediate == 4062)
+		/* if (immediate == 4062)
 		{
-				immediate = -18;					
-		}
+									
+		} */
 		
 		if (immediate == 4056)
 		{
 				immediate = -24;					
+		}
+		else
+		{
+			immediate = -16;
 		}
 		
 		
