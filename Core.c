@@ -340,20 +340,21 @@ Signal ImmeGen(Signal input, unsigned instruction)
 			immediate |= imm3 <<4;
 			immediate |= imm1 <<10;
 			immediate |= immNeg << 11;
-			if (immNeg == 1){
-					immediate = (~(immediate -1) -1) & 4095;
+		if (immNeg == 1)
+		{
+				immediate = (~(immediate -1)) & 4095;
 					immediate = immediate * -1;
-					{
-			else 
-			}
-					immediate = immediate;
-					
-			}
+		}
+		
+		
+		
 			
 			
 		
 		printf("unshifted imm - %d\n", immediate);
     }
+	
+
 
     return immediate;
 
