@@ -401,7 +401,7 @@ Signal ImmeGen(Signal input, unsigned instruction)
 		}
 		else
 		{
-			immediate = -16;
+			immediate = -18;
 		}
 		
 		
