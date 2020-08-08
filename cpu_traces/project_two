@@ -1,6 +1,6 @@
 add x21, x0, x0
 add x23, x0, x0
-slli x24, x21, 2
+sll x24, x21, x31
 add x24, x24, x23
 ld x26, 0(x24)
 sll x26, x26, x21
