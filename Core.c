@@ -112,6 +112,8 @@ bool tickFunc(Core *core)
 	if(signals.MemRead == 1)
 	{
 		core->reg_file[read_reg_2] = core->data_mem[ALU_output];
+		printf("the store register index - %ld\n",read_reg_2 );
+		printf("the read mem index - %ld\n",ALU_output);
 	}
 	//printf("the alu control signa; is - %ld\n",ALU_ctrl_signal );
 	//printf("the instruction  is - %d\n",instruction );
