@@ -98,21 +98,7 @@ void parseRType(char *opr, Instruction *instr)
 	if (strcmp(opr, "sll") == 0)
     {
         opcode = 51;
-        funct3 = 1;       
-		printf("in sll in parser\n");
-
-		char *reg = strtok(NULL, ", ");
-		unsigned rd = regIndex(reg); //write 
-
-		reg = strtok(NULL, ", ");
-		unsigned rs_1 = regIndex(reg);// read
-
-		reg = strtok(NULL, ", ");		
-		reg[strlen(reg)-1] = '\0';
-		unsigned rs_2 = regIndex(reg); //shift amt
-
-		
-		
+        funct3 = 1;       		
 	}
 
     char *reg = strtok(NULL, ", ");
