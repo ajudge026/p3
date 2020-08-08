@@ -115,7 +115,7 @@ bool tickFunc(Core *core)
 	{
 		
 		core->reg_file[write_reg] = core->data_mem[ALU_output];
-		printf("the store register index - %ld\n",read_reg_2 );
+		printf("the store register index - %ld\n",write_reg );
 		printf("the read mem index - %ld\n",ALU_output);
 	}
 	//printf("the alu control signa; is - %ld\n",ALU_ctrl_signal );
