@@ -103,7 +103,7 @@ bool tickFunc(Core *core)
 	//printf("alu input 1 - %ld\n", alu_in_1);
 	
     ALU(alu_in_0, alu_in_1, ALU_ctrl_signal, &ALU_output, &zero_alu_input); // 0 is offset shuold change to imm val 
-	printf("the alu control signa; is - %d\n",ALU_ctrl_signal );
+	printf("the alu control signa; is - %ld\n",ALU_ctrl_signal );
 	printf("the instruction  is - %d\n",instruction );
 	printf("the opcode is - %d\n",(instruction & 127));
 	if ((instruction & 127) == 51 && (func3 == 0 ))
@@ -320,7 +320,7 @@ Signal ALUControlUnit(Signal ALUOp,
     }
 	printf("Funct3 - %ld\n", Funct3);
     printf("Funct7 - %ld\n", Funct7);
-    printf("ALUOP - %ld\n", ALUOP);
+    printf("ALUOP - %ld\n", ALUOp);
     
 }
 
