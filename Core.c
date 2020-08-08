@@ -80,7 +80,7 @@ bool tickFunc(Core *core)
     Signal func3 =( (instruction >> (7 + 5)) & 7);
     printf("func3 - %ld\n", func3);
 	Signal func7 = ((instruction >> (7 + 5 + 3 + 5 + 5)) & 127);
-    Signal ALU_ctrl_signal = ALUControlUnit(signals.ALUOp, func7, func3);
+    Signal ALU_ctrl_signal = ALUControlUnit(instructions, signals.ALUOp, func7, func3);
 
     Register read_reg_1 = (instruction >> (7 + 5 + 3)) & 31;
     
@@ -207,11 +207,12 @@ bool tickFunc(Core *core)
 }
 
 // FIXME (1). Control Unit. Refer to Figure 4.18.
-void ControlUnit(Signal input,
+void ControlUnit(unsigned instruction, Signal input,
                  ControlSignals *signals)
-{
-    // For R-type
-    if (input == 51) {
+{	
+	Signal func3 = ( (instruction >> (7 + 5)) & 7)
+    // For R-type - add
+    if (input == 51 & (func3 == 0)) {
 		//printf("RType\n"); 
         signals->ALUSrc = 0;
         signals->MemtoReg = 0;
@@ -220,6 +221,19 @@ void ControlUnit(Signal input,
         signals->MemWrite = 0;
         signals->Branch = 0;
         signals->ALUOp = 2;
+    }
+	
+	
+	// For R-type - sll
+    if (input == 51 & (func3 == 1)) {
+		//printf("RType\n"); 
+        signals->ALUSrc = 0;
+        signals->MemtoReg = 0;
+        signals->RegWrite = 1;
+        signals->MemRead = 0;
+        signals->MemWrite = 0;
+        signals->Branch = 0;
+        signals->ALUOp = 0;
     }
     // For ld 
     if (input == 3) { //opcode
