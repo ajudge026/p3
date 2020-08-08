@@ -136,7 +136,7 @@ bool tickFunc(Core *core)
 		printf("the instruction is  bne\n"); //printing sll  operands b4 and after
 		printf("============================== bne =====================the operands were %ld - %ld and ", alu_in_1, alu_in_0); //printing sll operands b4 and after
 		//printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing sll  operands b4 and after
-		//printf("the result is %ld\n", ALU_output); //printing sll  operands b4 and after
+		printf("the result is %ld\n", ALU_output); //printing sll  operands b4 and after
 	}
 	
     //printf("ALU out: %ld\n", ALU_output);
@@ -202,6 +202,7 @@ bool tickFunc(Core *core)
 	//printf("signals.Branch is - %ld\n",  signals.Branch);
 	//printf("the non shifted immediate is - %ld\n", ImmeGen(Signal input, Signal instruction));
 	//printf("the shifted immediate is  - %ld\n", shifted_immediate);
+	
 	Signal mux_output = MUX((zero_alu_input & signals.Branch), 4, (signed int)shifted_immediate);
     core->PC = Add(core->PC, mux_output);
 	
@@ -450,7 +451,7 @@ void ALU(Signal input_0,
     {
         *ALU_result = (input_0 - input_1);
 		//printf("ALU RESULT - %ld", (input_0 - input_1));
-        if (*ALU_result != 0) { *zero = 1; } else { *zero = 0; }
+        if (*ALU_result != 0) { *zero = 0; } else { *zero = 1; }
     }
     // For shift left
     if (ALU_ctrl_signal == 3)
