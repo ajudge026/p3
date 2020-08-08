@@ -318,6 +318,9 @@ Signal ALUControlUnit(Signal ALUOp,
     {
         return 6;
     }
+	printf("Funct3 - %ld\n", Funct3);
+    printf("Funct7 - %ld\n", Funct7);
+    printf("ALUOP - %ld\n", ALUOP);
     
 }
 
