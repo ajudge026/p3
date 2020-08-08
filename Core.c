@@ -210,7 +210,7 @@ bool tickFunc(Core *core)
 void ControlUnit(unsigned instruction, Signal input,
                  ControlSignals *signals)
 {	
-	Signal func3 = ( (instruction >> (7 + 5)) & 7)
+	Signal func3 = ( (instruction >> (7 + 5)) & 7);
     // For R-type - add
     if (input == 51 & (func3 == 0)) {
 		//printf("RType\n"); 
