@@ -1,4 +1,1 @@
-add x21, x0, x0
-sw x21, 0(x21)
-add x21, x21, x22
-bne x21, x20, -4
+sll x20, x20, x22
