@@ -81,9 +81,9 @@ bool tickFunc(Core *core)
     ControlUnit(instruction, input, &signals);
 
     Signal func3 =( (instruction >> (7 + 5)) & 7);
-    printf("func3 - %ld\n", func3);
+    //printf("func3 - %ld\n", func3);
 	Signal func7 = ((instruction >> (7 + 5 + 3 + 5 + 5)) & 127);
-	printf("func7 in tickfunction - %ld\n", func7);
+	//printf("func7 in tickfunction - %ld\n", func7);
     Signal ALU_ctrl_signal = ALUControlUnit(signals.ALUOp, func7, func3);
 
     Register read_reg_1 = (instruction >> (7 + 5 + 3)) & 31;
@@ -107,29 +107,29 @@ bool tickFunc(Core *core)
 	//printf("alu input 1 - %ld\n", alu_in_1);
 	
     ALU(alu_in_0, alu_in_1, ALU_ctrl_signal, &ALU_output, &zero_alu_input); // 0 is offset shuold change to imm val 
-	printf("the alu control signa; is - %ld\n",ALU_ctrl_signal );
-	printf("the instruction  is - %d\n",instruction );
-	printf("the opcode is - %d\n",(instruction & 127));
+	//printf("the alu control signa; is - %ld\n",ALU_ctrl_signal );
+	//printf("the instruction  is - %d\n",instruction );
+	//printf("the opcode is - %d\n",(instruction & 127));
 	if ((instruction & 127) == 51 && (func3 == 0 ))
 	{
-		printf("the instruction is  add\n"); //printing adding operands b4 and after
-		printf("the operands were %ld - %ld and ", read_reg_1, alu_in_0); //printing adding operands b4 and after
-		printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing adding operands b4 and after
-		printf("the result is %ld\n", ALU_output); //printing adding operands b4 and after
+		//printf("the instruction is  add\n"); //printing adding operands b4 and after
+		//printf("the operands were %ld - %ld and ", read_reg_1, alu_in_0); //printing adding operands b4 and after
+		//printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing adding operands b4 and after
+		//printf("the result is %ld\n", ALU_output); //printing adding operands b4 and after
 	}
 	if ((instruction & 127) == 35)
 	{
-		printf("the instruction is  store (sw)\n"); //printing adding operands b4 and after
-		printf("the operands were %ld - %ld and ", read_reg_1, alu_in_0); //printing adding operands b4 and after
-		printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing adding operands b4 and after
-		printf("the result is %ld\n", ALU_output); //printing adding operands b4 and after
+		//printf("the instruction is  store (sw)\n"); //printing adding operands b4 and after
+		//printf("the operands were %ld - %ld and ", read_reg_1, alu_in_0); //printing adding operands b4 and after
+		//printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing adding operands b4 and after
+		//printf("the result is %ld\n", ALU_output); //printing adding operands b4 and after
 	}
 	if ((instruction & 127) == 51 && (func3 == 1 ))
 	{
-		printf("the instruction is  sll\n"); //printing sll  operands b4 and after
-		printf("the operands were %ld - %ld and ", read_reg_1, alu_in_0); //printing sll operands b4 and after
-		printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing sll  operands b4 and after
-		printf("the result is %ld\n", ALU_output); //printing sll  operands b4 and after
+		//printf("the instruction is  sll\n"); //printing sll  operands b4 and after
+		//printf("the operands were %ld - %ld and ", read_reg_1, alu_in_0); //printing sll operands b4 and after
+		//printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing sll  operands b4 and after
+		//printf("the result is %ld\n", ALU_output); //printing sll  operands b4 and after
 	}
 	
     //printf("ALU out: %ld\n", ALU_output);
@@ -140,8 +140,8 @@ bool tickFunc(Core *core)
 	//printf("reg_2_value should be data to write - %lu\n", reg_2_value);
 	if(signals.MemWrite)
     {
-        printf("the datamem write address is -  %lu\n",  ALU_output);
-		printf("the data being written is -  %lu\n",  read_reg_2_value);
+        //printf("the datamem write address is -  %lu\n",  ALU_output);
+		//printf("the data being written is -  %lu\n",  read_reg_2_value);
 		core->data_mem[ALU_output] = read_reg_2_value;
 		//printf("the data at the mem address is %u\n",   core->data_mem[ALU_output]);
     }
@@ -172,22 +172,22 @@ bool tickFunc(Core *core)
 			printf("the  value being written  is %ld\n", MUX(signals.MemtoReg, ALU_output, mem_result));
 		}
 		*/
-		printf("the reigister being written to is %ld\n", write_reg	);
-			printf("the  value being written  is %ld\n", MUX(signals.MemtoReg, ALU_output, mem_result));
+		//printf("the reigister being written to is %ld\n", write_reg	);
+			//printf("the  value being written  is %ld\n", MUX(signals.MemtoReg, ALU_output, mem_result));
         core->reg_file[write_reg] = MUX(signals.MemtoReg, ALU_output, mem_result);
     }
 
 
 
-    //printf("Register x9 -  %ld\n", core->reg_file[9]); 
-    //printf("Register x11 -  %ld\n", core->reg_file[11]);
+    ////printf("Register x9 -  %ld\n", core->reg_file[9]); 
+    ////printf("Register x11 -  %ld\n", core->reg_file[11]);
 
     Signal shifted_immediate = ShiftLeft1(ImmeGen(input, instruction));	
 	if((instruction& 127 )== 99)
 	{
-		printf("the instruction is  %ld\n", ALU_output); //printing adding operands b4 and after
-		printf("the comparing operands were %ld and %ld\n", alu_in_0,alu_in_1); //printing adding operands b4 and after
-		printf("the shifted imm is  %ld \n", shifted_immediate); //printing adding operands b4 and after
+		//printf("the instruction is  %ld\n", ALU_output); //printing adding operands b4 and after
+		//printf("the comparing operands were %ld and %ld\n", alu_in_0,alu_in_1); //printing adding operands b4 and after
+		//printf("the shifted imm is  %ld \n", shifted_immediate); //printing adding operands b4 and after
 	}
 	//printf("the mux control signal is - %d\n", (zero_alu_input && signals.Branch));
 	//printf("the zero_alu_input is - %ld\n", zero_alu_input );
@@ -340,9 +340,9 @@ Signal ALUControlUnit(Signal ALUOp,
     {
         return 6;
     }
-	printf("Funct3 - %ld\n", Funct3);
-    printf("Funct7 - %ld\n", Funct7);
-    printf("ALUOP - %ld\n", ALUOp);
+	//printf("Funct3 - %ld\n", Funct3);
+    //printf("Funct7 - %ld\n", Funct7);
+    //printf("ALUOP - %ld\n", ALUOp);
     
 }
 
@@ -374,10 +374,10 @@ Signal ImmeGen(Signal input, unsigned instruction)
 			Signal imm3 = (instruction >> 24) & 63 ;
 			Signal imm2 = (instruction >> 8) &15;
 			Signal imm1 = (instruction >> 7) &1;
-			printf("immneg = %d\n", immNeg);
-			printf("imm3 = %d\n", imm3);
-			printf("imm2 = %d\n", imm2);
-			printf("imm1 = %d\n", imm1);
+			//printf("immneg = %d\n", immNeg);
+			//printf("imm3 = %d\n", imm3);
+			//printf("imm2 = %d\n", imm2);
+			//printf("imm1 = %d\n", imm1);
 			immediate = imm2;
 			immediate |= imm3 <<4;
 			immediate |= imm1 <<10;
@@ -398,7 +398,7 @@ Signal ImmeGen(Signal input, unsigned instruction)
 			
 			
 		
-		printf("unshifted imm - %d\n", immediate);
+		//printf("unshifted imm - %d\n", immediate);
     }
 	
 
