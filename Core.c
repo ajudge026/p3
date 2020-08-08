@@ -49,6 +49,7 @@ Core *initCore(Instruction_Memory *i_mem)
 	 core->reg_file[27] = 50; 
 	 core->reg_file[30] = 1; 
 	 core->reg_file[31] = 2; 
+	 core->reg_file[31] = 2; 
 	 
     
     //score->reg_file[25] = 0; // offset
@@ -147,17 +148,18 @@ bool tickFunc(Core *core)
 	
 	// core outputs of memory 
     Signal mem_result= 0;
+	 mem_result = core->data_mem[ALU_output];
     
     // (Step N) Increment PC. FIXME, is it correct to always increment PC by 4?!
     // use mux to choose branch or incremented pc values   
-    mem_result|= core->data_mem[ALU_output + 7];
+    /* mem_result|= core->data_mem[ALU_output + 7];
     mem_result= mem_result<< 8 | core->data_mem[ALU_output + 6];
     mem_result= mem_result<< 16 | core->data_mem[ALU_output + 5];
     mem_result= mem_result<< 24 | core->data_mem[ALU_output + 4];
     mem_result= mem_result<< 32 | core->data_mem[ALU_output + 3];
     mem_result= mem_result<< 40 | core->data_mem[ALU_output + 2];
     mem_result= mem_result<< 48 | core->data_mem[ALU_output + 1];
-    mem_result= mem_result<< 56 | core->data_mem[ALU_output + 0];
+    mem_result= mem_result<< 56 | core->data_mem[ALU_output + 0]; */ // <-------------------------------- might need to change how addresses
     //printf("mem result - %ld\n", mem_result);
 
 	Signal write_reg_val =  core->reg_file[write_reg];
