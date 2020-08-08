@@ -105,7 +105,7 @@ bool tickFunc(Core *core)
     ALU(alu_in_0, alu_in_1, ALU_ctrl_signal, &ALU_output, &zero_alu_input); // 0 is offset shuold change to imm val 
 	printf("the instruction  is - %d\n",instruction );
 	printf("the opcode is - %d\n",(instruction & 127));
-	if ((instruction & 127) == 51)
+	if ((instruction & 127) == 51 && (func3 == 0 ))
 	{
 		printf("the instruction is  add\n"); //printing adding operands b4 and after
 		printf("the operands were %ld - %ld and ", read_reg_1, alu_in_0); //printing adding operands b4 and after
@@ -118,6 +118,13 @@ bool tickFunc(Core *core)
 		printf("the operands were %ld - %ld and ", read_reg_1, alu_in_0); //printing adding operands b4 and after
 		printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing adding operands b4 and after
 		printf("the result is %ld\n", ALU_output); //printing adding operands b4 and after
+	}
+	if ((instruction & 127) == 51 && (func3 == 1 ))
+	{
+		printf("the instruction is  sll\n"); //printing sll  operands b4 and after
+		printf("the operands were %ld - %ld and ", read_reg_1, alu_in_0); //printing sll operands b4 and after
+		printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing sll  operands b4 and after
+		printf("the result is %ld\n", ALU_output); //printing sll  operands b4 and after
 	}
 	
     //printf("ALU out: %ld\n", ALU_output);
@@ -288,7 +295,11 @@ Signal ALUControlUnit(Signal ALUOp,
     {
         return 1;
     }
-
+	// slli
+    if (ALUOp == 0 && Funct7 == 0 && Funct3 == 1)
+    {
+        return 3;
+    }
 
 	
     // ld 
@@ -306,11 +317,7 @@ Signal ALUControlUnit(Signal ALUOp,
     {
         return 6;
     }
-    // slli
-    if (ALUOp == 0 && Funct7 == 0 && Funct3 == 1)
-    {
-        return 3;
-    }
+    
 }
 
 // FIXME (3). Imme. Generator
