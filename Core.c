@@ -147,8 +147,8 @@ bool tickFunc(Core *core)
 	//printf("reg_2_value should be data to write - %lu\n", reg_2_value);
 	if(signals.MemWrite)
     {
-        //printf("the datamem write address is -  %lu\n",  ALU_output);
-		//printf("the data being written is -  %lu\n",  read_reg_2_value);
+       printf("############################the datamem write address is -  %lu\n",  ALU_output);
+		printf("###########################the data being written is#################### -  %lu\n",  read_reg_2_value);
 		core->data_mem[ALU_output] = read_reg_2_value;
 		//printf("the data at the mem address is %u\n",   core->data_mem[ALU_output]);
     }
