@@ -451,7 +451,7 @@ void ALU(Signal input_0,
     {
         *ALU_result = (input_0 - input_1);
 		//printf("ALU RESULT - %ld", (input_0 - input_1));
-        if (*ALU_result != 0) { *zero = 0; } else { *zero = 1; }
+        if (*ALU_result != 0) { *zero = 1; } else { *zero = 0; }
     }
     // For shift left
     if (ALU_ctrl_signal == 3)
