@@ -307,7 +307,7 @@ Signal ALUControlUnit(Signal ALUOp,
 // FIXME (3). Imme. Generator
 Signal ImmeGen(Signal input, Signal instruction)
 {
-    signed int immediate = 0;
+     int immediate = 0;
 
     //ld
     if (input == 3){
@@ -327,7 +327,29 @@ Signal ImmeGen(Signal input, Signal instruction)
     //bne
     if (input == 99)    {
         //  111111111110;
-        immediate = (inst >>31) + (instruction & 255) + ((instruction>>25) & 1008) + ((instruction >> 8));		//immediate = -4;
+			//imm goes from left to right 
+			int immNeg = (instruction >> 31) & 1;
+			int imm3 = (instruction >> 24) & 63 ;
+			int imm2 = (instruction >> 8) &15;
+			int imm1 = (instruction >> 7) &1;
+			printf("immneg = %d\n", immNeg);
+			printf("imm3 = %d\n", imm3);
+			printf("imm2 = %d\n", imm2);
+			printf("imm1 = %d\n", imm1);
+			immediate = imm2;
+			immediate |= imm3 <<4;
+			immediate |= imm1 <<10;
+			immediate |= immNeg << 11;
+			if (immNeg == 1){
+					immediate = (~(immediate -1) -1) & 4095;
+					immediate = immediate * -1;
+			else 
+					immediate = immediate;
+					
+			}
+			
+			
+		
 		printf("unshifted imm - %d\n", immediate);
     }
 
