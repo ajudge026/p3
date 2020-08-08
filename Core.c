@@ -111,7 +111,7 @@ bool tickFunc(Core *core)
     ALU(alu_in_0, alu_in_1, ALU_ctrl_signal, &ALU_output, &zero_alu_input); // 0 is offset shuold change to imm val 
 	if(signals.MemRead == 1)
 	{
-		core->reg_file[read_reg_2_value] = core->data_mem[ALU_output];
+		core->reg_file[read_reg_2] = core->data_mem[ALU_output];
 	}
 	//printf("the alu control signa; is - %ld\n",ALU_ctrl_signal );
 	//printf("the instruction  is - %d\n",instruction );
