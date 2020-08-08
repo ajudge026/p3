@@ -55,7 +55,7 @@ Signal ALUControlUnit(Signal ALUOp,
                       Signal Funct3);
 
 // FIXME (3). Imme. Generator
-Signal ImmeGen(Signal input);
+Signal ImmeGen(Signal input, unsigned instruction);
 
 // FIXME (4). ALU
 void ALU(Signal input_0,

@@ -305,7 +305,7 @@ Signal ALUControlUnit(Signal ALUOp,
 }
 
 // FIXME (3). Imme. Generator
-Signal ImmeGen(Signal input, Signal instruction)
+Signal ImmeGen(Signal input, unsigned instruction)
 {
      int immediate = 0;
 
@@ -343,7 +343,9 @@ Signal ImmeGen(Signal input, Signal instruction)
 			if (immNeg == 1){
 					immediate = (~(immediate -1) -1) & 4095;
 					immediate = immediate * -1;
+					{
 			else 
+			}
 					immediate = immediate;
 					
 			}
