@@ -46,7 +46,8 @@ typedef struct ControlSignals
     Signal ALUSrc;
     Signal RegWrite;
 }ControlSignals;
-void ControlUnit(Signal input,
+void ControlUnit(unsigned instruction, 
+				Signal input,
                  ControlSignals *signals);
 
 // FIXME (2). ALU Control Unit.

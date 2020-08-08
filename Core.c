@@ -75,12 +75,12 @@ bool tickFunc(Core *core)
 	
 	//holds signals from the controller
     ControlSignals signals;
-    ControlUnit(input, &signals);
+    ControlUnit(instruction, input, &signals);
 
     Signal func3 =( (instruction >> (7 + 5)) & 7);
     printf("func3 - %ld\n", func3);
 	Signal func7 = ((instruction >> (7 + 5 + 3 + 5 + 5)) & 127);
-    Signal ALU_ctrl_signal = ALUControlUnit(instructions, signals.ALUOp, func7, func3);
+    Signal ALU_ctrl_signal = ALUControlUnit(signals.ALUOp, func7, func3);
 
     Register read_reg_1 = (instruction >> (7 + 5 + 3)) & 31;
     
