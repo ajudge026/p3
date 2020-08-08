@@ -35,6 +35,7 @@ void loadInstructions(Instruction_Memory *i_mem, const char *trace)
             strcmp(raw_instr, "srl") == 0 ||
             strcmp(raw_instr, "xor") == 0 ||
             strcmp(raw_instr, "or")  == 0 ||
+			strcmp(raw_instr, "sll") == 0 ||
             strcmp(raw_instr, "and") == 0)
         {
 		////printf("The type of instruction is: %s\n", raw_instr);
@@ -45,8 +46,7 @@ void loadInstructions(Instruction_Memory *i_mem, const char *trace)
 		// Extract operation for I-Type		
 		else if (strcmp(raw_instr, "addi") == 0 ||
             strcmp(raw_instr, "slli") == 0 ||
-             strcmp(raw_instr, "ld") == 0 ||
-			 strcmp(raw_instr, "sll") == 0
+             strcmp(raw_instr, "ld") == 0			 
 			 )
         {
 		//printf("The type of instruction is: %s\n", raw_instr);
@@ -94,6 +94,26 @@ void parseRType(char *opr, Instruction *instr)
         funct3 = 0;
         funct7 = 0;
     }
+	
+	if (strcmp(opr, "sll") == 0)
+    {
+        opcode = 51;
+        funct3 = 1;       
+		printf("in sll in parser\n");
+
+		char *reg = strtok(NULL, ", ");
+		unsigned rd = regIndex(reg); //write 
+
+		reg = strtok(NULL, ", ");
+		unsigned rs_1 = regIndex(reg);// read
+
+		reg = strtok(NULL, ", ");		
+		reg[strlen(reg)-1] = '\0';
+		unsigned rs_2 = regIndex(reg); //shift amt
+
+		
+		
+	}
 
     char *reg = strtok(NULL, ", ");
     unsigned rd = regIndex(reg);
@@ -112,6 +132,7 @@ void parseRType(char *opr, Instruction *instr)
     instr->instruction |= (rs_1 << (7 + 5 + 3));
     instr->instruction |= (rs_2 << (7 + 5 + 3 + 5));
     instr->instruction |= (funct7 << (7 + 5 + 3 + 5 + 5));
+	printf("in parser the instruction is - %d\n", (instr->instruction));
 }
 
 
@@ -198,31 +219,7 @@ void parseIType(char *opr, Instruction *instr)
 		
 	}
 	
-	if (strcmp(opr, "sll") == 0)
-    {
-        opcode = 51;
-        funct3 = 1;       
-    
-
-		char *reg = strtok(NULL, ", ");
-		unsigned rd = regIndex(reg); //write 
-
-		reg = strtok(NULL, ", ");
-		unsigned rs_1 = regIndex(reg);// read
-
-		reg = strtok(NULL, ", ");		
-		reg[strlen(reg)-1] = '\0';
-		unsigned rs_2 = regIndex(reg); //shift amt
-
-		// Contruct instruction
-		instr->instruction |= opcode;
-		instr->instruction |= (rd << 7);
-		instr->instruction |= (funct3 << (7 + 5));
-		instr->instruction |= (rs_1 << (7 + 5 + 3));
-		instr->instruction |= (rs_2 << (7 + 5 + 3 + 5));		
-		instr->instruction |= (0 << (7 + 5 + 3 + 5 + 5));		
-		
-	}
+	
 }
 
 
