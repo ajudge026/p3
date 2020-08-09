@@ -126,18 +126,24 @@ bool tickFunc(Core *core)
 	//printf("the instruction  is - %d\n",instruction );
 	//printf("the opcode is - %d\n",(instruction & 127));
 	
-	if (core->PC == 28)
+	/* if (core->PC == 28)
 	{
 		printf("+++++++++++++<<<x32>>>+++++++++++++++++++++++++++++ the value of x%ld after adding to  %ld and %ld is - %ld\n", write_reg, read_reg_1_value, read_reg_2_value, ALU_output );
 		printf("+++++++++++++<<<x32>>>+++++++++++++++++++++++++++++ the instruction is -  %d\n", instruction);
 
-	}
-	if (core->PC == 0)
+	} */
+	/* if (core->PC == 0)
 	{
 		printf("+++++++++++++<<<x0>>>+++++++++++++++++++++++++++++ the value of x%ld after adding to  %ld and %ld is - %ld\n", write_reg, read_reg_1_value, read_reg_2_value, ALU_output );
 		printf("+++++++++++++<<<x0>>>+++++++++++++++++++++++++++++ the instruction is -  %d\n", instruction);
 
-	}
+	} */
+	if (core->PC == 32)
+	{
+		printf("+++++++++++++<<<x28>>>+++++++++++++++++++++++++++++ the value of x%ld after adding to  %ld and %ld is - %ld\n", write_reg, read_reg_1_value, read_reg_2_value, ALU_output );
+		printf("+++++++++++++<<<x28>>>+++++++++++++++++++++++++++++ the instruction is -  %d\n", instruction);
+
+	} 
 	if ((instruction & 127) == 51 && (func3 == 0 ))
 	{
 		//printf("the instruction is  add\n"); //printing adding operands b4 and after
