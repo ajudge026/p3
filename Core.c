@@ -262,7 +262,7 @@ bool tickFunc(Core *core)
 	Signal mux_output = MUX((zero_alu_input & signals.Branch), 4, (signed int)shifted_immediate);
     core->PC = Add(core->PC, mux_output);
 	
-    printf(" Program Counter after add: %ld\n", core->PC);
+    //printf(" Program Counter after add: %ld\n", core->PC);
 
 
 	
