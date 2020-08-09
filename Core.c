@@ -114,7 +114,8 @@ bool tickFunc(Core *core)
 	
 		
 	
-	if(signals.MemRead == 1)
+	
+	/* if(signals.MemRead == 1)
 	{
 		
 		core->reg_file[write_reg] = core->data_mem[ALU_output];
@@ -137,14 +138,14 @@ bool tickFunc(Core *core)
 		printf("+++++++++++++<<<sll - x24>>>+++++++++++++++++++++++++++++ the value of x%ld after adding to  %ld and %ld is - %ld\n", write_reg, read_reg_1_value, read_reg_2_value, ALU_output );
 		printf("+++++++++++++<<<sll - x24>>>+++++++++++++++++++++++++++++ the instruction is -  %d\n", instruction);
 
-	}	
+	}	 */
 	/* if (core->PC == 0)
 	{
 		printf("+++++++++++++<<<x0>>>+++++++++++++++++++++++++++++ the value of x%ld after adding to  %ld and %ld is - %ld\n", write_reg, read_reg_1_value, read_reg_2_value, ALU_output );
 		printf("+++++++++++++<<<x0>>>+++++++++++++++++++++++++++++ the instruction is -  %d\n", instruction);
 
 	} */
-	if (core->PC == 32)
+	/* if (core->PC == 32)
 	{
 		printf("+++++++++++++<<<x28>>>+++++++++++++++++++++++++++++ the value of x%ld after adding to  %ld and %ld is - %ld\n", write_reg, read_reg_1_value, read_reg_2_value, ALU_output );
 		printf("+++++++++++++<<<x28>>>+++++++++++++++++++++++++++++ the instruction is -  %d\n", instruction);
@@ -163,12 +164,12 @@ bool tickFunc(Core *core)
 		//printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing adding operands b4 and after
 		//printf("the result is %ld\n", ALU_output); //printing adding operands b4 and after
 		/*if(read_reg_1 == 32 && read_reg_2 == 26)
-		{*/
+		{
 			
 			printf("++++++++++++++++++++++++++++++++++++++++++ the value of x%ld after adding to  %ld and %ld is - %ld\n", write_reg, read_reg_1_value, read_reg_2_value, ALU_output );
-		//}
-	}
-	if ((instruction & 127) == 35)
+		}
+	} */
+	/* if ((instruction & 127) == 35)
 	{
 		//printf("the instruction is  store (sw)\n"); //printing adding operands b4 and after
 		//printf("the operands were %ld - %ld and ", read_reg_1, alu_in_0); //printing adding operands b4 and after
@@ -192,8 +193,8 @@ bool tickFunc(Core *core)
 		printf("============================== bne =====================the operands were %ld - %ld and ", alu_in_1, alu_in_0); //printing sll operands b4 and after
 		//printf("the operands were %ld - %ld\n", read_reg_2, alu_in_1); //printing sll  operands b4 and after
 		printf("the result is %ld\n", ALU_output); //printing sll  operands b4 and after
-	}
-	
+	} */
+
     //printf("ALU out: %ld\n", ALU_output);
 
     //Register write_reg = (instruction >> 7) & 31;	
