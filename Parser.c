@@ -68,7 +68,9 @@ void loadInstructions(Instruction_Memory *i_mem, const char *trace)
 			//printf("in if statement s-type\n");
             parseSType(raw_instr, &(i_mem->instructions[IMEM_index]));
             i_mem->last = &(i_mem->instructions[IMEM_index]);
-        }
+        }		
+			
+			
 
         IMEM_index++;
  PC += 4;
