@@ -128,14 +128,14 @@ bool tickFunc(Core *core)
 	
 	 if (core->PC == 28)
 	{
-		printf("+++++++++++++<<<x32>>>+++++++++++++++++++++++++++++ the value of x%ld after adding to  %ld and %ld is - %ld\n", write_reg, read_reg_1_value, read_reg_2_value, ALU_output );
-		printf("+++++++++++++<<<x32>>>+++++++++++++++++++++++++++++ the instruction is -  %d\n", instruction);
+		printf("+++++++++++++<<<x20>>>+++++++++++++++++++++++++++++ the value of x%ld after adding to  %ld and %ld is - %ld\n", write_reg, read_reg_1_value, read_reg_2_value, ALU_output );
+		printf("+++++++++++++<<<x20>>>+++++++++++++++++++++++++++++ the instruction is -  %d\n", instruction);
 
 	}
 	if (core->PC == 12)
 	{
 		printf("+++++++++++++<<<sll - x24>>>+++++++++++++++++++++++++++++ the value of x%ld after adding to  %ld and %ld is - %ld\n", write_reg, read_reg_1_value, read_reg_2_value, ALU_output );
-		printf("+++++++++++++<<<sll - x32>>>+++++++++++++++++++++++++++++ the instruction is -  %d\n", instruction);
+		printf("+++++++++++++<<<sll - x24>>>+++++++++++++++++++++++++++++ the instruction is -  %d\n", instruction);
 
 	}	
 	/* if (core->PC == 0)
