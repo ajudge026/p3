@@ -26,10 +26,17 @@ int main(int argc, const char *argv[])
     //printf("after init core\n");
     /* Task Three - Simulation */
     while (core->tick(core));
-	for(int i =0; i <200; i++)
+	for(int i =0; i <16; i++)
 	{
+		printf("-----------------The original; matirix -------------------", );
 		printf("data_mem[%d] - %d\n", i, core->data_mem[i]);
 	}
+	for(int i =50; i <53; i++)
+	{
+		printf("-----------------The out matrix  -------------------", );
+		printf("data_mem[%d] - %d\n", i, core->data_mem[i]);
+	}
+
 
     printf("Simulation is finished.\n");
 
