@@ -26,14 +26,14 @@ int main(int argc, const char *argv[])
     //printf("after init core\n");
     /* Task Three - Simulation */
     while (core->tick(core));
+	printf("-----------------The original; matirix -------------------\n" );
 	for(int i =0; i <16; i++)
 	{
-		printf("-----------------The original; matirix -------------------" );
 		printf("data_mem[%d] - %d\n", i, core->data_mem[i]);
 	}
-	for(int i =50; i <53; i++)
-	{
-		printf("-----------------The out matrix  -------------------" );
+	printf("-----------------The out matrix  -------------------\n" );
+	for(int i =50; i <54; i++)
+	{		
 		printf("data_mem[%d] - %d\n", i, core->data_mem[i]);
 	}
 
