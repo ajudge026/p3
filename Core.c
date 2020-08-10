@@ -114,6 +114,13 @@ bool tickFunc(Core *core)
 	
 		
 	
+		/* 
+	if (core->PC == 20)
+	{
+		printf("+++++++++++++<<<x24>>>+++++++++++++++++++++++++++++ the value of x%ld after adding to  %ld and %ld is - %ld\n", write_reg, read_reg_1_value, read_reg_2_value, ALU_output );
+		printf("+++++++++++++<<<x24>>>+++++++++++++++++++++++++++++ the instruction is -  %d\n", instruction);
+
+	} */
 	
 	/* if(signals.MemRead == 1)
 	{
@@ -212,6 +219,13 @@ bool tickFunc(Core *core)
 	// core outputs of memory 
     Signal mem_result= 0;
 	 mem_result = core->data_mem[8*ALU_output];
+	 	if (core->PC == 20)
+	{
+		printf("+++++++++++++<<<x26>>>+++++++++++++++++++++++++++++ the value of x%ld after adding to  %ld and %ld is - %ld\n", write_reg, read_reg_1_value, read_reg_2_value, ALU_output );
+		printf("+++++++++++++<<<x26>>>+++++++++++++++++++++++++++++ the value of the load register is -  %ld \n", mem_result );
+		printf("+++++++++++++<<<x26>>>+++++++++++++++++++++++++++++ the instruction is -  %d\n", instruction);
+
+	}
     
     // (Step N) Increment PC. FIXME, is it correct to always increment PC by 4?!
     // use mux to choose branch or incremented pc values   
