@@ -9,7 +9,7 @@ Core *initCore(Instruction_Memory *i_mem)
     core->tick = tickFunc;
 
     // FIXME, initialize register file here.
-    // core->data_mem[0] = ...
+    // core->data_mem[8*0] = ...
     
     //data memory setting for uint64_t arr[] = {16, 128, 8, 4}
 
@@ -19,14 +19,14 @@ Core *initCore(Instruction_Memory *i_mem)
     
 	for (int i = 0; i <(1024);i++)
 	{
-		core->data_mem[i] = 0;
-		//printf("data_mem[%d] = %d\n", i, i);
+		core->data_mem[8*i] = 0;
+		//printf("data_mem[8*%d] = %d\n", i, i);
 	}
 	
 	for (int i = 0; i <(16);i++)
 	{
-		core->data_mem[i] = i;
-		//printf("data_mem[%d] = %d\n", i, i);
+		core->data_mem[8*i] = i;
+		//printf("data_mem[8*%d] = %d\n", i, i);
 	}
 	
 
@@ -118,7 +118,7 @@ bool tickFunc(Core *core)
 	/* if(signals.MemRead == 1)
 	{
 		
-		core->reg_file[write_reg] = core->data_mem[ALU_output];
+		core->reg_file[write_reg] = core->data_mem[8*ALU_output];
 		printf(":::::::::::::::: ld :::::::::::::the store register index - %ld\n",write_reg );
 		printf("::::::::::::::::::: the read mem index - %ld\n",ALU_output);
 		printf("::::::::::::::::::: the read mem val - %ld\n",(core->reg_file[write_reg]));
@@ -205,24 +205,24 @@ bool tickFunc(Core *core)
     {
        //printf("############################the datamem write address is -  %lu\n",  ALU_output);
 		//printf("###########################the data being written is#################### -  %lu\n",  read_reg_2_value);
-		core->data_mem[ALU_output] = read_reg_2_value;
-		//printf("the data at the mem address is %u\n",   core->data_mem[ALU_output]);
+		core->data_mem[8*ALU_output] = read_reg_2_value;
+		//printf("the data at the mem address is %u\n",   core->data_mem[8*ALU_output]);
     }
 	
 	// core outputs of memory 
     Signal mem_result= 0;
-	 mem_result = core->data_mem[ALU_output];
+	 mem_result = core->data_mem[8*ALU_output];
     
     // (Step N) Increment PC. FIXME, is it correct to always increment PC by 4?!
     // use mux to choose branch or incremented pc values   
-    /* mem_result|= core->data_mem[ALU_output + 7];
-    mem_result= mem_result<< 8 | core->data_mem[ALU_output + 6];
-    mem_result= mem_result<< 16 | core->data_mem[ALU_output + 5];
-    mem_result= mem_result<< 24 | core->data_mem[ALU_output + 4];
-    mem_result= mem_result<< 32 | core->data_mem[ALU_output + 3];
-    mem_result= mem_result<< 40 | core->data_mem[ALU_output + 2];
-    mem_result= mem_result<< 48 | core->data_mem[ALU_output + 1];
-    mem_result= mem_result<< 56 | core->data_mem[ALU_output + 0]; */ // <-------------------------------- might need to change how addresses
+    /* mem_result|= core->data_mem[8*ALU_output + 7];
+    mem_result= mem_result<< 8 | core->data_mem[8*ALU_output + 6];
+    mem_result= mem_result<< 16 | core->data_mem[8*ALU_output + 5];
+    mem_result= mem_result<< 24 | core->data_mem[8*ALU_output + 4];
+    mem_result= mem_result<< 32 | core->data_mem[8*ALU_output + 3];
+    mem_result= mem_result<< 40 | core->data_mem[8*ALU_output + 2];
+    mem_result= mem_result<< 48 | core->data_mem[8*ALU_output + 1];
+    mem_result= mem_result<< 56 | core->data_mem[8*ALU_output + 0]; */ // <-------------------------------- might need to change how addresses
     //printf("mem result - %ld\n", mem_result);
 
 	Signal write_reg_val =  core->reg_file[write_reg];
@@ -272,7 +272,7 @@ bool tickFunc(Core *core)
     // Are we reaching the final instruction?
     if (core->PC > core->instr_mem->last->addr)
     {
-		//printf("the datamem stored is - %d ", core->data_mem[0]);
+		//printf("the datamem stored is - %d ", core->data_mem[8*0]);
         return false;
     }
     return true;

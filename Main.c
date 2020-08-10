@@ -27,14 +27,14 @@ int main(int argc, const char *argv[])
     /* Task Three - Simulation */
     while (core->tick(core));
 	printf("-----------------The original; matirix -------------------\n" );
-	for(int i =0; i <16; i++)
-	{
-		printf("data_mem[%d] - %d\n", i, core->data_mem[i]);
-	}
+	
 	printf("-----------------The out matrix  -------------------\n" );
-	for(int i =50; i <54; i++)
+	for(int i =0; i <1024; i++)
 	{		
-		printf("data_mem[%d] - %d\n", i, core->data_mem[i]);
+		if (i == 0 || core->data_mem[8*i] != 0)
+		{
+				printf("data_mem[8*%d] - %d\n", i, core->data_mem[8*i]);
+		}		
 	}
 
 
