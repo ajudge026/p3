@@ -119,6 +119,12 @@ bool tickFunc(Core *core)
 		printf("+++++++++++++<<<x26>>>+++++++++++++++++++++++++++++ the instruction is -  %d\n", instruction);
 
 	}
+	 if (core->PC == 36)
+	{
+		printf("+++++++++++++<<<x20>>>+++++++++++++++++++++++++++++ the value of x%ld storing  %ld by  %ld is - %ld\n", write_reg, read_reg_1_value, read_reg_2_value, ALU_output );
+		printf("+++++++++++++<<<x20>>>+++++++++++++++++++++++++++++ the instruction is -  %d\n", instruction);
+
+	}
 		/* 
 	if (core->PC == 20)
 	{
