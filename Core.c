@@ -19,7 +19,7 @@ Core *initCore(Instruction_Memory *i_mem)
     
 	for (int i = 0; i <(1024);i++)
 	{
-		core->data_mem[8*i] = 0;
+		core->data_mem[i] = 0;
 		//printf("data_mem[8*%d] = %d\n", i, i);
 	}
 	
