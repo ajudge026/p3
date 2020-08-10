@@ -31,9 +31,9 @@ int main(int argc, const char *argv[])
 	printf("-----------------The out matrix  -------------------\n" );
 	for(int i =0; i <1024; i++)
 	{		
-		if (i == 0 || core->data_mem[8*i] != 0)
+		if (i == 0 || core->data_mem[i] != 0)
 		{
-				printf("data_mem[8*%d] - %d\n", i, core->data_mem[8*i]);
+				printf("data_mem[%d] - %d\n", i, core->data_mem[i]);
 		}		
 	}
 
