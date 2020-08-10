@@ -28,8 +28,16 @@ int main(int argc, const char *argv[])
     while (core->tick(core));
 	printf("-----------------The original; matirix -------------------\n" );
 	
+	
+	for(int i =0; i <128; i++)
+	{		
+		if (i == 0 || core->data_mem[i] != 0)
+		{
+				printf("data_mem[%d] - %d\n", i, core->data_mem[i]);
+		}		
+	}
 	printf("-----------------The out matrix  -------------------\n" );
-	for(int i =0; i <1024; i++)
+	for(int i =128; i <1024; i++)
 	{		
 		if (i == 0 || core->data_mem[i] != 0)
 		{
